@@ -26,6 +26,10 @@ const config: Config = {
         'dark-gray': 'hsl(var(--color-dark-gray))',
         'very-dark-gray': 'hsl(var(--color-very-dark-gray))',
 
+        // additional colors
+        'form-success-state': 'hsl(var(--color-form-success-state))',
+        'form-error-state': 'hsl(var(--color-form-error-state))',
+
         // shadcn-ui colors
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

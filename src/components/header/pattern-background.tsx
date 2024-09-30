@@ -4,7 +4,7 @@ import patternBgDesktop from '/public/assets/images/pattern-bg-desktop.png';
 import patternBgMobile from '/public/assets/images/pattern-bg-mobile.png';
 
 const BACKGROUND_IMAGE_ALT =
-  'A geometric pattern with blue lines on a gradient background.';
+  'A geometric pattern with blue lines on a gradient background';
 
 type PatternBackgroundProps = {
   className?: React.ComponentProps<'div'>['className'];
@@ -19,7 +19,7 @@ export function PatternBackground({ className }: PatternBackgroundProps) {
           alt={BACKGROUND_IMAGE_ALT}
           className="object-cover object-center"
           placeholder="blur"
-          sizes="100vw"
+          sizes="(max-width: 479px) 100vw"
           quality={100}
           priority
           fill
@@ -31,7 +31,7 @@ export function PatternBackground({ className }: PatternBackgroundProps) {
           alt={BACKGROUND_IMAGE_ALT}
           className="object-cover object-center"
           placeholder="blur"
-          sizes="100vw"
+          sizes="(min-width: 480px) 100vw"
           quality={100}
           priority
           fill

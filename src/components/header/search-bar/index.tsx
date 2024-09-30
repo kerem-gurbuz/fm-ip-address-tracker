@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -15,17 +16,15 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { searchInputSchema } from '@/lib/schemas';
 import { cn } from '@/lib/utils';
 import { ArrowIcon } from './arrow-icon';
 
-// TODO: Change this placeholder to the actual validation schema.
-const searchInputSchema = z.object({
-  input: z
-    .string()
-    .min(1, { message: 'Please enter a valid IP address or domain' }),
-});
+type SearchBarProps = {
+  className?: React.ComponentProps<'form'>['className'];
+};
 
-export function SearchBar() {
+export function SearchBar({ className }: SearchBarProps) {
   const form = useForm<z.infer<typeof searchInputSchema>>({
     resolver: zodResolver(searchInputSchema),
     defaultValues: {
@@ -33,20 +32,30 @@ export function SearchBar() {
     },
   });
 
+  const { control, reset } = form;
+  const { errors, isSubmitting, isSubmitSuccessful, isSubmitted, isDirty } =
+    form.formState;
+
   function onSubmit(values: z.infer<typeof searchInputSchema>) {
     // Do something with the form values.
     console.log(values);
   }
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="relative w-full max-w-[555px]"
+        className={cn('relative w-full max-w-[555px]', className)}
       >
         <FormField
-          control={form.control}
           name="input"
+          control={control}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="sr-only">Search</FormLabel>
@@ -57,8 +66,10 @@ export function SearchBar() {
                   className={cn(
                     'h-[58px] rounded-[15px] border-none bg-white px-[24px] pb-[19px] pt-[18px] text-[18px] leading-[21px] text-very-dark-gray transition-all duration-500 placeholder:text-very-dark-gray placeholder:opacity-50 focus-visible:ring-2 focus-visible:ring-transparent max-[480px]:placeholder-transparent',
                     {
-                      'text-destructive focus-visible:ring-destructive':
-                        form.formState.errors.input,
+                      'text-form-error-state focus-visible:ring-form-error-state':
+                        errors.input,
+                      'text-form-success-state focus-visible:ring-form-success-state':
+                        isSubmitted && isDirty && !errors.input,
                     },
                   )}
                   {...field}
@@ -67,24 +78,20 @@ export function SearchBar() {
               <FormDescription className="sr-only">
                 Search for any IP address or domain
               </FormDescription>
-              <div
-                className={cn('h-[24px] transition-all duration-500', {
-                  'animate-in fade-in': form.formState.errors.input,
-                })}
-              >
-                <FormMessage className="pl-6 text-left text-xs leading-[24px] md:text-base" />
-              </div>
+              <FormMessage className="sr-only" />
             </FormItem>
           )}
         />
         <Button
           type="submit"
           aria-label="Search"
+          disabled={isSubmitting}
           className={cn(
-            'absolute right-0 top-0 z-10 h-[58px] w-[58px] rounded-none rounded-r-[15px] bg-black transition-colors duration-500 hover:bg-[#3F3F3F]',
+            'absolute right-0 top-0 z-10 h-[58px] w-[58px] rounded-none rounded-r-[13px] bg-black transition-colors duration-500 hover:bg-[#3F3F3F]',
             {
-              'bg-destructive hover:bg-destructive':
-                form.formState.errors.input,
+              'bg-form-error-state hover:bg-form-error-state': errors.input,
+              'bg-form-success-state hover:bg-form-success-state':
+                isSubmitted && isDirty && !errors.input,
             },
           )}
         >
