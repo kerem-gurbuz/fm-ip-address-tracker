@@ -10,6 +10,15 @@
   }
 }
 
+/* additional colors */
+@layer base {
+  :root {
+    /* search form success and error states */
+    --color-form-success-state: 120, 60%, 30%;
+    --color-form-error-state: 0, 100%, 50%;
+  }
+}
+
 /* shadcn-ui colors */
 @layer base {
   :root {
