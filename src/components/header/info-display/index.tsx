@@ -1,7 +1,9 @@
 import { fromZodError } from 'zod-validation-error';
 
-import { geolocationDataSchema } from '@/lib/schemas';
-import type { GeolocationDataType } from '@/lib/types';
+import {
+  geolocationDataSchema,
+  type GeolocationDataType,
+} from '@/lib/definitions/geolocation';
 import { cn } from '@/lib/utils';
 import { InfoCard } from './info-card';
 import { InfoSeparator } from './info-separator';

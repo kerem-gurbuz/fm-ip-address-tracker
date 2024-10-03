@@ -16,27 +16,39 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { searchInputSchema } from '@/lib/schemas';
+import { searchInputSchema } from '@/lib/definitions/search';
 import { cn } from '@/lib/utils';
 import { ArrowIcon } from './arrow-icon';
+
+const formSchema = z.object({
+  input: searchInputSchema,
+});
 
 type SearchBarProps = {
   className?: React.ComponentProps<'form'>['className'];
 };
 
 export function SearchBar({ className }: SearchBarProps) {
-  const form = useForm<z.infer<typeof searchInputSchema>>({
-    resolver: zodResolver(searchInputSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       input: '',
     },
   });
 
-  const { control, reset } = form;
-  const { errors, isSubmitting, isSubmitSuccessful, isSubmitted, isDirty } =
-    form.formState;
+  const {
+    control,
+    reset,
+    formState: {
+      errors,
+      isSubmitting,
+      isSubmitSuccessful,
+      isSubmitted,
+      isDirty,
+    },
+  } = form;
 
-  function onSubmit(values: z.infer<typeof searchInputSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     console.log(values);
   }
