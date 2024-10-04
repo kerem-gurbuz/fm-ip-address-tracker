@@ -4,6 +4,8 @@ export {
   selectCurrentSearchInput,
   selectSearchErrorMessage,
   selectSearchHistory,
+  selectSearchHistoryEntryByDomain,
+  selectSearchHistoryEntryByIp,
   selectSearchHistoryLength,
 } from './search-selectors';
 export {

@@ -14,8 +14,6 @@ export function ReduxStoreProvider({ children }: ReduxStoreProviderProps) {
   if (!storeRef.current) {
     // Create the store instance the first time this renders
     storeRef.current = makeStore();
-
-    // TODO: Initialize the store with the IP Geolocation API data for displaying the user's IP on initial page load
   }
 
   return <Provider store={storeRef.current}>{children}</Provider>;

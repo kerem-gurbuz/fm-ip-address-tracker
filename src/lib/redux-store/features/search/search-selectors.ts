@@ -1,5 +1,6 @@
 import { createSelectorCreator, weakMapMemoize } from '@reduxjs/toolkit';
 
+import type { RootState } from '@/lib/redux-store/store';
 import { fallbackToEmptyArray } from '@/lib/utils';
 import { searchSlice } from './search-slice';
 
@@ -34,3 +35,17 @@ export const selectAllSearchHistoryDomains = createSelectorWeakMap(
     );
   },
 );
+
+export const selectSearchHistoryEntryByIp = (state: RootState, ip: string) => {
+  const { searchHistory } = state.search;
+  return searchHistory.find((entry) => entry.data.ip === ip);
+};
+
+export const selectSearchHistoryEntryByDomain = (
+  state: RootState,
+  domain: string,
+) => {
+  const { searchHistory } = state.search;
+  return searchHistory.find((entry) => entry.data.domains.includes(domain));
+};
+ 
