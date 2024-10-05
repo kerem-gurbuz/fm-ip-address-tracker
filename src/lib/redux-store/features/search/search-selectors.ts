@@ -5,15 +5,15 @@ import { fallbackToEmptyArray } from '@/lib/utils';
 import { searchSlice } from './search-slice';
 
 export const {
-  selectCurrentSearchInput,
   selectSearchHistory,
   selectSearchHistoryLength,
   selectSearchErrorMessage,
+  selectCurrentSearchTerm,
 } = searchSlice.selectors;
 
 const createSelectorWeakMap = createSelectorCreator({
-  memoize: weakMapMemoize,
   argsMemoize: weakMapMemoize,
+  memoize: weakMapMemoize,
   devModeChecks: {
     inputStabilityCheck: 'always',
     identityFunctionCheck: 'always',
@@ -36,16 +36,16 @@ export const selectAllSearchHistoryDomains = createSelectorWeakMap(
   },
 );
 
-export const selectSearchHistoryEntryByIp = (state: RootState, ip: string) => {
-  const { searchHistory } = state.search;
-  return searchHistory.find((entry) => entry.data.ip === ip);
-};
+export const selectSearchHistoryEntryByIp = createSelectorWeakMap(
+  [selectSearchHistory, (_state: RootState, ip: string) => ip],
+  (searchHistory, ip) => {
+    return searchHistory.find((entry) => entry.data.ip === ip);
+  },
+);
 
-export const selectSearchHistoryEntryByDomain = (
-  state: RootState,
-  domain: string,
-) => {
-  const { searchHistory } = state.search;
-  return searchHistory.find((entry) => entry.data.domains.includes(domain));
-};
- 
+export const selectSearchHistoryEntryByDomain = createSelectorWeakMap(
+  [selectSearchHistory, (_state: RootState, domain: string) => domain],
+  (searchHistory, domain) => {
+    return searchHistory.find((entry) => entry.data.domains.includes(domain));
+  },
+);

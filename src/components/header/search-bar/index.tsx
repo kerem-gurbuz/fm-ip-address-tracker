@@ -16,12 +16,14 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { searchInputSchema } from '@/lib/definitions/search';
+import { searchTermSchema } from '@/lib/definitions/search';
+import { setCurrentSearchTerm } from '@/lib/redux-store/features/search';
+import { useAppDispatch } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 import { ArrowIcon } from './arrow-icon';
 
 const formSchema = z.object({
-  input: searchInputSchema,
+  input: searchTermSchema,
 });
 
 type SearchBarProps = {
@@ -48,9 +50,10 @@ export function SearchBar({ className }: SearchBarProps) {
     },
   } = form;
 
+  const dispatch = useAppDispatch();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    console.log(values);
+    dispatch(setCurrentSearchTerm({ searchTerm: values.input }));
   }
 
   useEffect(() => {

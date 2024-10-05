@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 import { geolocationDataSchema } from '@/lib/definitions/geolocation';
-import { searchInputSchema } from './search-input.schema';
+import { searchTermSchema } from './search-term.schema';
 
 export const searchHistoryEntrySchema = z.object({
-  searchTerm: searchInputSchema,
+  searchTerm: searchTermSchema,
   data: geolocationDataSchema,
   timestamp: z.string(), // new Date().toISOString()
 });

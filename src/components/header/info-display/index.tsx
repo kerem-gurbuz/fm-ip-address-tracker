@@ -1,60 +1,53 @@
-import { fromZodError } from 'zod-validation-error';
+'use client';
 
-import {
-  geolocationDataSchema,
-  type GeolocationDataType,
-} from '@/lib/definitions/geolocation';
+import { selectCurrentSearchTerm } from '@/lib/redux-store/features/search';
+import { useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 import { InfoCard } from './info-card';
 import { InfoSeparator } from './info-separator';
 
-// TODO: Fetch the actual data from the IP Geolocation API.
-const DATA: Pick<GeolocationDataType, 'ip' | 'location' | 'isp'> = {
-  ip: '192.212.174.101',
+const MOCK_DATA = {
+  ip: '8.8.8.8',
   location: {
-    city: 'Brooklyn',
-    region: 'NY',
-    postalCode: '10001',
-    timezone: '-05:00',
     country: 'US',
-    geonameId: 1,
-    lat: 1,
-    lng: 1,
+    region: 'California',
+    city: 'Mountain View',
+    lat: 37.40599,
+    lng: -122.078514,
+    postalCode: '94043',
+    timezone: '-07:00',
+    geonameId: 5375481,
   },
-  isp: 'SpaceX Starlink',
+  domains: [
+    '0d2.net',
+    '003725.com',
+    '0f6.b0094c.cn',
+    '007515.com',
+    '0guhi.jocose.cn',
+  ],
+  as: {
+    asn: 15169,
+    name: 'Google LLC',
+    route: '8.8.8.0/24',
+    domain: 'https://about.google/intl/en/',
+    type: 'Content',
+  },
+  isp: 'Google LLC',
 };
-
-const infoDisplaySchema = geolocationDataSchema.pick({
-  ip: true,
-  location: true,
-  isp: true,
-});
 
 type InfoDisplayProps = {
   className?: React.ComponentProps<'div'>['className'];
 };
 
 export function InfoDisplay({ className }: InfoDisplayProps) {
-  const result = infoDisplaySchema.safeParse(DATA);
-
-  if (!result.success) {
-    const validationError = fromZodError(result.error, {
-      prefix: 'Invalid data',
-      prefixSeparator: ': ',
-      issueSeparator: '; ',
-      unionSeparator: ', or ',
-      includePath: true,
-    });
-
-    // TODO: Show an error message to the user. For now, just throw an error.
-    throw new Error(validationError.message);
-  }
+  const searchTerm = useAppSelector(selectCurrentSearchTerm);
+  console.log('searchTerm:', searchTerm);
 
   const {
     ip,
     isp,
     location: { region, city, postalCode, timezone },
-  } = result.data;
+  } = MOCK_DATA;
 
   const formattedData = [
     {

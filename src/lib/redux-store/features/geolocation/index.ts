@@ -2,6 +2,7 @@ export {
   selectCurrentGeolocationData,
   selectGeolocationErrorMessage,
 } from './geolocation-selectors';
+
 export {
   geolocationSlice,
   setCurrentGeolocationData,

@@ -10,5 +10,5 @@ export type { SearchHistoryEntryType } from './search-history-entry.type';
 export { searchHistorySchema } from './search-history.schema';
 export type { SearchHistoryType } from './search-history.type';
 
-export { searchInputSchema } from './search-input.schema';
-export type { SearchInputType } from './search-input.type';
+export type { SearchTermType } from './search-term.type';
+export { searchTermSchema } from './search-term.schema';

@@ -3,7 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type {
   SearchHistoryEntryType,
   SearchHistoryType,
-  SearchInputType,
+  SearchTermType,
 } from '@/lib/definitions/search';
 
 import {
@@ -15,14 +15,14 @@ import {
 const MAX_HISTORY_LENGTH_DEFAULT = 100;
 
 type SearchState = {
-  currentSearchInput: SearchInputType | null;
+  currentSearchTerm: SearchTermType | null;
   searchHistory: SearchHistoryType | [];
   searchHistoryLength: number;
   errorMessage: string | null;
 };
 
 const initialState: SearchState = {
-  currentSearchInput: null,
+  currentSearchTerm: null,
   searchHistory: getSearchHistoryFromLocalStorage(),
   searchHistoryLength: MAX_HISTORY_LENGTH_DEFAULT,
   errorMessage: null,
@@ -32,12 +32,12 @@ export const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setCurrentSearchInput: (
+    setCurrentSearchTerm: (
       state,
-      action: PayloadAction<{ searchInput: SearchInputType | null }>,
+      action: PayloadAction<{ searchTerm: SearchTermType | null }>,
     ) => {
-      const { searchInput } = action.payload;
-      state.currentSearchInput = searchInput;
+      const { searchTerm } = action.payload;
+      state.currentSearchTerm = searchTerm;
     },
     setSearchHistoryLength: (
       state,
@@ -85,7 +85,7 @@ export const searchSlice = createSlice({
     },
   },
   selectors: {
-    selectCurrentSearchInput: (state) => state.currentSearchInput,
+    selectCurrentSearchTerm: (state) => state.currentSearchTerm,
     selectSearchHistory: (state) => state.searchHistory,
     selectSearchHistoryLength: (state) => state.searchHistoryLength,
     selectSearchErrorMessage: (state) => state.errorMessage,
@@ -93,7 +93,7 @@ export const searchSlice = createSlice({
 });
 
 export const {
-  setCurrentSearchInput,
+  setCurrentSearchTerm,
   setSearchHistoryLength,
   addToSearchHistory,
   clearSearchHistory,

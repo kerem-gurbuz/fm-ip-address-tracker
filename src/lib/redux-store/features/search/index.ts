@@ -1,18 +1,19 @@
 export {
   selectAllSearchHistoryDomains,
   selectAllSearchHistoryIps,
-  selectCurrentSearchInput,
+  selectCurrentSearchTerm,
   selectSearchErrorMessage,
   selectSearchHistory,
   selectSearchHistoryEntryByDomain,
   selectSearchHistoryEntryByIp,
   selectSearchHistoryLength,
 } from './search-selectors';
+
 export {
   addToSearchHistory,
   clearSearchHistory,
   searchSlice,
-  setCurrentSearchInput,
+  setCurrentSearchTerm,
   setSearchErrorMessage,
   setSearchHistoryLength,
 } from './search-slice';

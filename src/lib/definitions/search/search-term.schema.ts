@@ -4,7 +4,7 @@ import { domainNameSchema } from './domain-name.schema';
 import { ipAddressSchema } from './ip-address.schema';
 
 // Zod schema for validating both IP address and domain
-export const searchInputSchema = z.string().refine(
+export const searchTermSchema = z.string().refine(
   (input) => {
     return z.union([ipAddressSchema, domainNameSchema]).safeParse(input)
       .success;
