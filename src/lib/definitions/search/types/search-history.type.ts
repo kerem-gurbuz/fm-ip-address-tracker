@@ -1,5 +1,5 @@
 import { z } from 'zod';
 
-import { searchHistorySchema } from './search-history.schema';
+import { searchHistorySchema } from '../schemas/search-history.schema';
 
 export type SearchHistoryType = z.infer<typeof searchHistorySchema>;

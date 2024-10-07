@@ -32,4 +32,5 @@ export const geolocationDataSchema = z
     as: asSchema, // Autonomous System
     isp: z.string(), // Internet Service Provider
   })
+  .partial()
   .strict();

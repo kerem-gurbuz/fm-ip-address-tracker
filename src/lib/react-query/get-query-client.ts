@@ -4,8 +4,8 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-const STALE_TIME: number | undefined = 24 * 60 * 60 * 1000; // 24 hours
-const CACHE_TIME: number | undefined = 24 * 60 * 60 * 1000; // 24 hours
+const STALE_TIME = 1000 * 60 * 60 * 24; // 24 hours
+const CACHE_TIME = 1000 * 60 * 60 * 24; // 24 hours
 
 function makeQueryClient() {
   return new QueryClient({

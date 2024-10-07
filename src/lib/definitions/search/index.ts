@@ -1,14 +1,11 @@
-export { domainNameSchema } from './domain-name.schema';
-export type { DomainNameType } from './domain-name.type';
+export { domainNameSchema } from './schemas/domain-name.schema';
+export { ipAddressSchema } from './schemas/ip-address.schema';
+export { searchHistoryEntrySchema } from './schemas/search-history-entry.schema';
+export { searchHistorySchema } from './schemas/search-history.schema';
+export { searchTermSchema } from './schemas/search-term.schema';
 
-export { ipAddressSchema } from './ip-address.schema';
-export type { IpAddressType } from './ip-address.type';
-
-export { searchHistoryEntrySchema } from './search-history-entry.schema';
-export type { SearchHistoryEntryType } from './search-history-entry.type';
-
-export { searchHistorySchema } from './search-history.schema';
-export type { SearchHistoryType } from './search-history.type';
-
-export type { SearchTermType } from './search-term.type';
-export { searchTermSchema } from './search-term.schema';
+export type { DomainNameType } from './types/domain-name.type';
+export type { IpAddressType } from './types/ip-address.type';
+export type { SearchHistoryEntryType } from './types/search-history-entry.type';
+export type { SearchHistoryType } from './types/search-history.type';
+export type { SearchTermType } from './types/search-term.type';

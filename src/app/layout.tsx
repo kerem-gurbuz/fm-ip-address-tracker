@@ -1,5 +1,6 @@
 import { Header } from '@/components/header';
 import { ReactQueryProvider, ReduxStoreProvider } from '@/components/providers';
+import { Toaster } from '@/components/ui/toaster';
 import { rubik } from '@/lib/styles/fonts';
 import '@/lib/styles/globals.css';
 
@@ -19,6 +20,7 @@ export default function RootLayout({
               <Header className="h-[300px] w-full md:h-[280px]" />
               <main className="flex-1">{children}</main>
             </div>
+            <Toaster />
           </ReactQueryProvider>
         </ReduxStoreProvider>
       </body>

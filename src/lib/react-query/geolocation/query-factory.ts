@@ -1,22 +1,41 @@
-import { queryOptions } from '@tanstack/react-query';
+import { queryOptions, skipToken } from '@tanstack/react-query';
 
-import {
-  getGeolocationDataByDomainName,
-  getGeolocationDataByIpAddress,
-} from './query-functions';
+import { getGeolocationData } from './query-functions';
+
+/* 
+  Frontend Mentor - IP address tracker > The challenge
+  ------------------------------------------------------------------------
+  Your users should be able to:
+
+  - See their own IP address on the map on the initial page load
+  - Search for any IP addresses or domains and see the key information and location
+ */
 
 export const geolocationQueries = {
   all: () => ['geolocations'] as const,
   lists: () => [...geolocationQueries.all(), 'list'] as const,
   details: () => [...geolocationQueries.all(), 'detail'] as const,
-  detailByIpAddress: (ipAddress: string) =>
+
+  // Get geolocation data by client request's public IP address
+  initial: () =>
+    queryOptions({
+      queryKey: [...geolocationQueries.details(), 'initial'] as const,
+      queryFn: () => getGeolocationData(),
+    }),
+
+  // Get geolocation data by IP address
+  detailByIpAddress: (ipAddress?: string) =>
     queryOptions({
       queryKey: [...geolocationQueries.details(), { ipAddress }] as const,
-      queryFn: () => getGeolocationDataByIpAddress(ipAddress),
+      queryFn: ipAddress ? () => getGeolocationData({ ipAddress }) : skipToken,
     }),
-  detailByDomainName: (domainName: string) =>
+
+  // Get geolocation data by domain name
+  detailByDomainName: (domainName?: string) =>
     queryOptions({
       queryKey: [...geolocationQueries.details(), { domainName }] as const,
-      queryFn: () => getGeolocationDataByDomainName(domainName),
+      queryFn: domainName
+        ? () => getGeolocationData({ domainName })
+        : skipToken,
     }),
 };

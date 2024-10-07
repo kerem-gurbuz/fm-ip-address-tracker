@@ -1,6 +1,3 @@
 export { geolocationQueries } from './query-factory';
 
-export {
-  getGeolocationDataByDomainName,
-  getGeolocationDataByIpAddress,
-} from './query-functions';
+export { getGeolocationData } from './query-functions';
