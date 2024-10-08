@@ -1,25 +1,49 @@
 import { cn } from '@/lib/utils';
 
+import type { GeolocationDataType } from '@/lib/definitions/geolocation';
+import { InfoItem } from './info-item';
+import { InfoSeparator } from './info-separator';
+
 type InfoCardProps = {
   className?: React.ComponentProps<'div'>['className'];
-  label: string;
-  value: string;
+  data: GeolocationDataType;
 };
 
-export function InfoCard({ className, label, value }: InfoCardProps) {
-  return (
+export function InfoCard({ className, data }: InfoCardProps) {
+  const { ip, location, isp } = data;
+  const { city, region, timezone, postalCode } = location;
+
+  const formattedData = [
+    {
+      label: 'IP Address',
+      value: ip,
+    },
+    {
+      label: 'Location',
+      value: `${city}, ${region} ${postalCode ? `(${postalCode})` : ''}`.trim(),
+    },
+    {
+      label: 'Timezone',
+      value: `UTC ${timezone}`,
+    },
+    {
+      label: 'ISP',
+      value: isp || '-',
+    },
+  ];
+
+  return formattedData.map(({ label, value }, index) => (
     <div
+      key={index}
       className={cn(
-        'space-y-[7px] text-center text-very-dark-gray min-[480px]:text-left md:space-y-[13px] md:px-[32px] md:py-[37px]',
+        'relative inset-0 flex justify-center min-[480px]:justify-start lg:min-h-[161px]',
         className,
       )}
     >
-      <h2 className="text-[10px] font-bold uppercase leading-[12px] tracking-[1.46px] opacity-50 md:text-[12px] md:leading-[14px] md:tracking-[1.75px]">
-        {label}
-      </h2>
-      <p className="text-[20px] font-medium leading-[24px] md:text-[26px] md:leading-[30px]">
-        {value}
-      </p>
+      <InfoItem label={label} value={value} />
+      {index !== formattedData.length - 1 ? (
+        <InfoSeparator index={index} />
+      ) : null}
     </div>
-  );
+  ));
 }

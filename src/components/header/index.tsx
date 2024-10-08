@@ -1,3 +1,7 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+
+import { geolocationQueries } from '@/lib/react-query/geolocation';
+import { getQueryClient } from '@/lib/react-query/get-query-client';
 import { cn } from '@/lib/utils';
 import { InfoDisplay } from './info-display';
 import { PatternBackground } from './pattern-background';
@@ -8,6 +12,11 @@ type HeaderProps = {
 };
 
 export function Header({ className }: HeaderProps) {
+  const queryClient = getQueryClient();
+
+  // Prefetch initial geolocation data by client request's public IP address
+  void queryClient.prefetchQuery(geolocationQueries.initial());
+
   return (
     <header
       id="header"
@@ -21,7 +30,9 @@ export function Header({ className }: HeaderProps) {
           </h1>
           <SearchBar />
         </div>
-        <InfoDisplay />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <InfoDisplay />
+        </HydrationBoundary>
       </div>
     </header>
   );
