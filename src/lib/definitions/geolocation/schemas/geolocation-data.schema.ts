@@ -28,9 +28,8 @@ export const geolocationDataSchema = z
   .object({
     ip: z.string(), // IP address
     location: locationSchema, // Location
-    domains: z.array(z.string()), // Domains
+    domains: z.array(z.string()).optional(), // Domains
     as: asSchema, // Autonomous System
     isp: z.string(), // Internet Service Provider
   })
-  .partial()
   .strict();

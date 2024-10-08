@@ -1,5 +1,6 @@
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const API_ENDPOINT = '/api/ip-geolocation';
 
 type GetGeolocationDataParams = {
@@ -9,8 +10,8 @@ type GetGeolocationDataParams = {
 
 export async function getGeolocationData(
   params: GetGeolocationDataParams = {},
-): Promise<GeolocationDataType> {
-  let url = API_ENDPOINT;
+): Promise<{ data: GeolocationDataType }> {
+  let url = `${BASE_URL}${API_ENDPOINT}`;
 
   if (params.ipAddress) {
     url += `?ipAddress=${encodeURIComponent(params.ipAddress)}`;

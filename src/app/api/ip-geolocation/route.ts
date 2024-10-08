@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 
@@ -7,16 +7,17 @@ import { domainNameSchema, ipAddressSchema } from '@/lib/definitions/search';
 
 // TODO: Integrate authentication and authorization checks for API calls
 // TODO: Implement rate limiting to prevent abuse of the API
-// TODO: Implement error logging
+// TODO: Implement error logging and reporting (e.g. Sentry)
 
 export const maxDuration = 5;
 
-const BASE_URL = process.env.IPIFY_BASE_URL;
-const API_KEY = process.env.IPIFY_API_KEY;
+const API_URL = process.env.IPIFY_URL;
+const API_KEY = process.env.IPIFY_KEY;
+const API_ENDPOINT = '/api/v2/country,city';
 
-if (!BASE_URL || !API_KEY) {
+if (!API_URL || !API_KEY) {
   throw new Error(
-    'Missing required environment variables: IPIFY_BASE_URL or IPIFY_API_KEY',
+    'Missing required environment variables: IPIFY_URL or IPIFY_KEY',
   );
 }
 
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
 
     if (ipAddress) {
       if (!ipAddressSchema.safeParse(ipAddress).success) {
-        return Response.json(
+        return NextResponse.json(
           { error: 'Invalid IP address format' },
           { status: 400 },
         );
@@ -38,7 +39,7 @@ export async function GET(request: NextRequest) {
       searchParams.append('ipAddress', ipAddress);
     } else if (domain) {
       if (!domainNameSchema.safeParse(domain).success) {
-        return Response.json(
+        return NextResponse.json(
           { error: 'Invalid domain name format' },
           { status: 400 },
         );
@@ -46,14 +47,14 @@ export async function GET(request: NextRequest) {
       searchParams.append('domain', domain);
     }
 
-    const url = `${BASE_URL}/country,city?${searchParams.toString()}`;
+    const url = `${API_URL}${API_ENDPOINT}?${searchParams.toString()}`;
 
     const response = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (!response.ok) {
-      return Response.json(
+      return NextResponse.json(
         { error: `Request failed: ${response.status} ${response.statusText}` },
         { status: response.status },
       );
@@ -62,7 +63,7 @@ export async function GET(request: NextRequest) {
     const rawData = await response.json();
     const parsedData = geolocationDataSchema.parse(rawData);
 
-    return Response.json({ data: parsedData }, { status: 200 });
+    return NextResponse.json({ data: parsedData }, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError) {
       const validationError = fromZodError(error, {
@@ -72,14 +73,17 @@ export async function GET(request: NextRequest) {
         unionSeparator: ', or ',
         includePath: true,
       });
-      return Response.json({ error: validationError.message }, { status: 422 });
+      return NextResponse.json(
+        { error: validationError.message },
+        { status: 422 },
+      );
     }
 
     if (error instanceof Error) {
-      return Response.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return Response.json(
+    return NextResponse.json(
       { error: 'An error occurred while fetching data' },
       { status: 500 },
     );

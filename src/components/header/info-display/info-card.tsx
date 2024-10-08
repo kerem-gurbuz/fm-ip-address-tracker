@@ -11,11 +11,6 @@ type InfoCardProps = {
 
 export function InfoCard({ className, data }: InfoCardProps) {
   const { ip, location, isp } = data;
-
-  if (!ip || !location || !isp) {
-    return null;
-  }
-
   const { city, region, timezone, postalCode } = location;
 
   const formattedData = [
@@ -33,7 +28,7 @@ export function InfoCard({ className, data }: InfoCardProps) {
     },
     {
       label: 'ISP',
-      value: isp,
+      value: isp || '-',
     },
   ];
 

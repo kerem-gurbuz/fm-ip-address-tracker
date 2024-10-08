@@ -16,11 +16,12 @@ export const geolocationQueries = {
   lists: () => [...geolocationQueries.all(), 'list'] as const,
   details: () => [...geolocationQueries.all(), 'detail'] as const,
 
-  // Get geolocation data by client request's public IP address
+  // Get (initial) geolocation data by client request's public IP address
   initial: () =>
     queryOptions({
       queryKey: [...geolocationQueries.details(), 'initial'] as const,
       queryFn: () => getGeolocationData(),
+      select: ({ data }) => data,
     }),
 
   // Get geolocation data by IP address
@@ -28,6 +29,7 @@ export const geolocationQueries = {
     queryOptions({
       queryKey: [...geolocationQueries.details(), { ipAddress }] as const,
       queryFn: ipAddress ? () => getGeolocationData({ ipAddress }) : skipToken,
+      select: ({ data }) => data,
     }),
 
   // Get geolocation data by domain name
@@ -37,5 +39,6 @@ export const geolocationQueries = {
       queryFn: domainName
         ? () => getGeolocationData({ domainName })
         : skipToken,
+      select: ({ data }) => data,
     }),
 };

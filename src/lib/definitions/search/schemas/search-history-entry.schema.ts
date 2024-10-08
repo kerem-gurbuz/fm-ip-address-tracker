@@ -6,5 +6,5 @@ import { searchTermSchema } from './search-term.schema';
 export const searchHistoryEntrySchema = z.object({
   searchTerm: searchTermSchema,
   data: geolocationDataSchema,
-  timestamp: z.string(), // new Date().toISOString()
+  timestamp: z.number(),
 });
