@@ -20,8 +20,7 @@ export function Header({ className }: HeaderProps) {
   return (
     <header
       id="header"
-      className={cn('relative z-[9000] pt-[26px] md:pt-[33px]', className)}
-      // z-index set to 9000 because Leaflet map component has a z-index of 1000
+      className={cn('relative pt-[26px] md:pt-[33px]', className)}
     >
       <PatternBackground className="absolute inset-0 -z-50" />
       <div className="container h-full max-w-[1110px] px-6 xl:px-0">

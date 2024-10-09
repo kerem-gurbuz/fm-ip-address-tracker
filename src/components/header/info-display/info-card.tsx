@@ -40,7 +40,7 @@ export function InfoCard({ className, data }: InfoCardProps) {
         className,
       )}
     >
-      <InfoItem label={label} value={value} />
+      <InfoItem index={index} label={label} value={value} />
       {index !== formattedData.length - 1 ? (
         <InfoSeparator index={index} />
       ) : null}

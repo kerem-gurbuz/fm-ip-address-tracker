@@ -10,7 +10,11 @@ interface MapProps extends MapOptions {
 
 const DynamicMap = ({ children, ...other }: MapProps) => {
   return (
-    <MapContainer className="h-full w-full" {...other}>
+    <MapContainer
+      className="relative h-full w-full"
+      zoomControl={false}
+      {...other}
+    >
       {children}
     </MapContainer>
   );

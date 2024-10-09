@@ -31,7 +31,7 @@ export const selectAllSearchHistoryDomains = createSelectorWeakMap(
   [selectSearchHistory],
   (searchHistory) => {
     return fallbackToEmptyArray(
-      searchHistory.map((entry) => entry.data.domains.flat()),
+      searchHistory.map((entry) => entry.data.domains?.flat()),
     );
   },
 );
@@ -46,6 +46,6 @@ export const selectSearchHistoryEntryByIp = createSelectorWeakMap(
 export const selectSearchHistoryEntryByDomain = createSelectorWeakMap(
   [selectSearchHistory, (_state: RootState, domain: string) => domain],
   (searchHistory, domain) => {
-    return searchHistory.find((entry) => entry.data.domains.includes(domain));
+    return searchHistory.find((entry) => entry.data.domains?.includes(domain));
   },
 );

@@ -2,15 +2,20 @@ import { cn } from '@/lib/utils';
 
 type InfoItemProps = {
   className?: React.ComponentProps<'div'>['className'];
+  index: number;
   label: string;
   value: string;
 };
 
-export function InfoItem({ className, label, value }: InfoItemProps) {
+export function InfoItem({ className, index, label, value }: InfoItemProps) {
   return (
     <div
       className={cn(
-        'space-y-[7px] text-center text-very-dark-gray min-[480px]:text-left md:space-y-[13px] md:px-[32px] md:py-[37px]',
+        'space-y-[7px] text-center text-very-dark-gray min-[480px]:text-left md:space-y-[13px] md:px-[32px] lg:py-[37px]',
+        {
+          'md:pb-[18.5px] md:pt-[37px]': index < 2,
+          'md:pb-[37px] md:pt-[18.5px]': index >= 2,
+        },
         className,
       )}
     >
