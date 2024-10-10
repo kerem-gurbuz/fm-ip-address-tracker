@@ -2,7 +2,7 @@
 
 import type { LatLngExpression } from 'leaflet';
 import { HouseIcon } from 'lucide-react';
-import type { Dispatch, SetStateAction } from 'react';
+import { useCallback, type Dispatch, type SetStateAction } from 'react';
 import { useMap } from 'react-leaflet';
 
 import { Button } from '@/components/ui/button';
@@ -36,10 +36,12 @@ export function GetMyLocationBtn({
   className,
   setPosition,
 }: GetMyLocationBtnProps) {
-  const { loading, location, error } = useUserLocation();
   const map = useMap();
 
-  const handleClick = () => {
+  const { loading, location, error } = useUserLocation();
+  // useUserLocation custom hook uses the browser Geolocation API to get the user's current location.
+
+  const handleClick = useCallback(() => {
     if (location) {
       const [lat, lng] = location;
       const newPosition: LatLngExpression = { lat, lng };
@@ -50,7 +52,7 @@ export function GetMyLocationBtn({
       setPosition(() => FALLBACK_LOCATION);
       map.flyTo(FALLBACK_LOCATION);
     }
-  };
+  }, [location, error, map, setPosition]);
 
   return (
     <TooltipProvider>
