@@ -1,10 +1,8 @@
 export {
-  selectAllSearchHistoryDomains,
   selectAllSearchHistoryIps,
   selectCurrentSearchTerm,
   selectSearchErrorMessage,
   selectSearchHistory,
-  selectSearchHistoryEntryByDomain,
   selectSearchHistoryEntryByIp,
   selectSearchHistoryLength,
 } from './search-selectors';

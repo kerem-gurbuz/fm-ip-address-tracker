@@ -10,8 +10,11 @@ import {
   setCurrentGeolocationData,
   setGeolocationErrorMessage,
 } from '@/lib/redux-store/features/geolocation';
-import { addToSearchHistory } from '@/lib/redux-store/features/search';
-import { useAppDispatch } from '@/lib/redux-store/hooks';
+import {
+  addToSearchHistory,
+  selectCurrentSearchTerm,
+} from '@/lib/redux-store/features/search';
+import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
 
 /**
  * Custom hook for managing geolocation data in the application.
@@ -27,12 +30,11 @@ import { useAppDispatch } from '@/lib/redux-store/hooks';
  *
  * @returns {void}
  */
-export const useGeolocationQueryBySearchTerm = (
-  searchTerm: string | null,
-): void => {
+export const useGeolocationQueryBySearchTerm = (): void => {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
+  const searchTerm = useAppSelector(selectCurrentSearchTerm);
   const parsedIpAddress = ipAddressSchema.safeParse(searchTerm).data;
   const parsedDomainName = domainNameSchema.safeParse(searchTerm).data;
 
