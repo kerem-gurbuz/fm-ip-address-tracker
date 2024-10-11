@@ -1,9 +1,11 @@
 import { z } from 'zod';
 
-// IP Geolocation API
-// https://geo.ipify.org/docs
-/* -------------------------------------------------------------------------- */
-// "Country + City" API Type Response
+/* 
+  IP Geolocation API
+  https://geo.ipify.org/docs
+  --------------------------------------------------------------------------
+  "Country + City" API Type Response
+ */
 
 const locationSchema = z.object({
   country: z.string(),

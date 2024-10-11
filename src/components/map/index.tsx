@@ -4,18 +4,23 @@ import type { LatLngExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { TileLayer, ZoomControl } from 'react-leaflet';
 
-import { selectCurrentGeolocationPosition } from '@/lib/redux-store/features/geolocation';
+import { selectCurrentPosition } from '@/lib/redux-store/features/geolocation';
 import { useAppSelector } from '@/lib/redux-store/hooks';
-import 'leaflet/dist/leaflet.css';
 import { DisplayPositionBtn } from './display-position-brn';
-import DynamicMap from './dynamic-map';
 import { GetMyLocationBtn } from './get-my-location-btn';
 import { LocationMarker } from './location-marker';
+import { MapContainer } from './map-container';
 
-const MAP_ZOOM = 13;
+import 'leaflet/dist/leaflet.css';
+
+/**
+ * Lower zoom levels means that the map shows entire continents, while higher zoom levels means that the map can show details of a city.
+ * https://leafletjs.com/examples/zoom-levels/
+ */
+const ZOOM_LEVEL = 13;
 
 export default function LeafletMap() {
-  const currentPosition = useAppSelector(selectCurrentGeolocationPosition);
+  const currentPosition = useAppSelector(selectCurrentPosition);
   const [position, setPosition] = useState<LatLngExpression | null>(
     currentPosition,
   );
@@ -26,10 +31,12 @@ export default function LeafletMap() {
     }
   }, [currentPosition]);
 
-  return position === null ? null : (
-    <DynamicMap
+  if (!position) return null;
+
+  return (
+    <MapContainer
       center={position}
-      zoom={MAP_ZOOM}
+      zoom={ZOOM_LEVEL}
       zoomControl={false}
       zoomAnimation
       scrollWheelZoom
@@ -41,11 +48,11 @@ export default function LeafletMap() {
       />
       <LocationMarker position={position} />
       <ZoomControl position="bottomright" />
-      <div className="absolute bottom-[92px] right-[10px] z-[9000] flex flex-col rounded-[2px] border-2 border-black/20">
+      <div className="absolute bottom-[92px] right-[10px] z-[9000] flex flex-col rounded-[4px] border-2 border-black/20">
         <GetMyLocationBtn setPosition={setPosition} />
         <div className="h-[1px] bg-gray-600" />
         <DisplayPositionBtn center={position} />
       </div>
-    </DynamicMap>
+    </MapContainer>
   );
 }

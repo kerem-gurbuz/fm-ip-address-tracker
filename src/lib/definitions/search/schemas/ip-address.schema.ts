@@ -1,11 +1,9 @@
 import { z } from 'zod';
 
-export const ipAddressSchema = z.string().ip();
-
-// IP addresses
-// https://zod.dev/?id=ip-addresses
-/* -------------------------------------------------------------------------- */
 /* 
+  IP addresses
+  https://zod.dev/?id=ip-addresses
+  --------------------------------------------------------------------------
   The z.string().ip() method by default validate IPv4 and IPv6.
 
   const ip = z.string().ip();
@@ -24,4 +22,6 @@ export const ipAddressSchema = z.string().ip();
 
   const ipv6 = z.string().ip({ version: "v6" });
   ipv6.parse("192.168.1.1"); // fail 
-*/
+ */
+
+export const ipAddressSchema = z.string().ip();

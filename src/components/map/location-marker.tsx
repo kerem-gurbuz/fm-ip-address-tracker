@@ -1,19 +1,9 @@
-import { Icon, type LatLngExpression } from 'leaflet';
-import { useEffect } from 'react';
+import { type LatLngExpression, icon } from 'leaflet';
+import { useEffect, useMemo } from 'react';
 import { Marker, Popup, useMap } from 'react-leaflet';
 
 import MarkerIcon from '/public/assets/images/marker-icon.png';
 import MarkerShadow from '/public/assets/images/marker-shadow.png';
-
-const MARKER_ICON = new Icon({
-  iconUrl: MarkerIcon.src,
-  iconRetinaUrl: MarkerIcon.src,
-  iconSize: [46, 56],
-  iconAnchor: [23, 56],
-  popupAnchor: [0, -56],
-  shadowUrl: MarkerShadow.src,
-  shadowSize: [41, 41],
-});
 
 type LocationMarkerProps = {
   position: LatLngExpression;
@@ -21,13 +11,26 @@ type LocationMarkerProps = {
 
 export function LocationMarker({ position }: LocationMarkerProps) {
   const map = useMap();
+  const markerIcon = useMemo(
+    () =>
+      icon({
+        iconUrl: MarkerIcon.src,
+        iconRetinaUrl: MarkerIcon.src,
+        shadowUrl: MarkerShadow.src,
+        iconSize: [46, 56],
+        shadowSize: [41, 41],
+        iconAnchor: [23, 56],
+        popupAnchor: [0, -56],
+      }),
+    [],
+  );
 
   useEffect(() => {
     map.flyTo(position);
   }, [position, map]);
 
   return (
-    <Marker position={position} icon={MARKER_ICON}>
+    <Marker position={position} icon={markerIcon}>
       <Popup>You are here</Popup>
     </Marker>
   );

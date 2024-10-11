@@ -1,6 +1,6 @@
 import type { SearchHistoryType } from '@/lib/definitions/search';
 
-const SEARCH_HISTORY_KEY = 'ipSearchHistory';
+const SEARCH_HISTORY_KEY = 'geolocation_search_history';
 
 export const getSearchHistoryFromLocalStorage = (): SearchHistoryType => {
   if (typeof localStorage === 'undefined') return [];

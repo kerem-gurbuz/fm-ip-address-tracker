@@ -1,8 +1,4 @@
-import {
-  defaultShouldDehydrateQuery,
-  isServer,
-  QueryClient,
-} from '@tanstack/react-query';
+import { isServer, QueryClient } from '@tanstack/react-query';
 
 const STALE_TIME = 1000 * 60 * 60 * 24; // 24 hours
 const CACHE_TIME = 1000 * 60 * 60 * 24; // 24 hours
@@ -18,12 +14,6 @@ function makeQueryClient() {
         refetchOnMount: true,
         refetchOnReconnect: true,
         refetchOnWindowFocus: false,
-      },
-      dehydrate: {
-        // include pending queries in dehydration
-        shouldDehydrateQuery: (query) =>
-          defaultShouldDehydrateQuery(query) ||
-          query.state.status === 'pending',
       },
     },
   });

@@ -10,6 +10,7 @@ export {
 export {
   addToSearchHistory,
   clearSearchHistory,
+  resetSearchState,
   searchSlice,
   setCurrentSearchTerm,
   setSearchErrorMessage,

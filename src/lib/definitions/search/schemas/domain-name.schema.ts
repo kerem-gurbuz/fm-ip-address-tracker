@@ -25,6 +25,6 @@ const domainRegex = /^(?!:\/\/)([a-zA-Z0-9-_]+\.)+[a-zA-Z]{2,6}$/;
     "example.com.",
     "example.123",
   ];
-*/
+ */
 
 export const domainNameSchema = z.string().regex(domainRegex);

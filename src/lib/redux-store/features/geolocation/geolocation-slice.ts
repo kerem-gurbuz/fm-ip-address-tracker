@@ -30,6 +30,9 @@ export const geolocationSlice = createSlice({
       const { errorMessage } = action.payload;
       state.errorMessage = errorMessage;
     },
+    resetGeolocationState: () => {
+      return initialState;
+    },
   },
   selectors: {
     selectCurrentGeolocationData: (state) => state.currentGeolocationData,
@@ -37,5 +40,8 @@ export const geolocationSlice = createSlice({
   },
 });
 
-export const { setCurrentGeolocationData, setGeolocationErrorMessage } =
-  geolocationSlice.actions;
+export const {
+  setCurrentGeolocationData,
+  setGeolocationErrorMessage,
+  resetGeolocationState,
+} = geolocationSlice.actions;

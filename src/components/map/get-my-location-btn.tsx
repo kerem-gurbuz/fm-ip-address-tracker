@@ -1,5 +1,3 @@
-'use client';
-
 import type { LatLngExpression } from 'leaflet';
 import { HouseIcon } from 'lucide-react';
 import { useCallback, type Dispatch, type SetStateAction } from 'react';
@@ -15,12 +13,12 @@ import {
 import { useUserLocation } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
-/* 
-  Anıtkabir, Ankara, Turkey
-  ------------------------------------------------------------------------
-  Latitude and longitude coordinates are: 39.925018, 32.836956
-
-  Anıtkabir (literally, "memorial tomb") is the mausoleum of Mustafa Kemal Atatürk, the leader of the Turkish War of Independence and the founder and first President of the Republic of Turkey.
+/**
+ * Anıtkabir, Ankara, Turkey
+ * -------------------------------------------------------------------------
+ * Latitude and longitude coordinates are: 39.925018, 32.836956
+ *
+ * Anıtkabir (literally, "memorial tomb") is the mausoleum of Mustafa Kemal Atatürk, the leader of the Turkish War of Independence and the founder and first President of the Republic of Turkey.
  */
 const FALLBACK_LOCATION: LatLngExpression = {
   lat: 39.925018,
@@ -37,22 +35,18 @@ export function GetMyLocationBtn({
   setPosition,
 }: GetMyLocationBtnProps) {
   const map = useMap();
-
-  const { loading, location, error } = useUserLocation();
-  // useUserLocation custom hook uses the browser Geolocation API to get the user's current location.
+  const { loading, location: userLocation, error } = useUserLocation();
 
   const handleClick = useCallback(() => {
-    if (location) {
-      const [lat, lng] = location;
-      const newPosition: LatLngExpression = { lat, lng };
-      setPosition(() => newPosition);
-      map.flyTo(newPosition);
+    if (userLocation) {
+      setPosition(() => userLocation as LatLngExpression);
+      map.flyTo(userLocation as LatLngExpression);
     }
     if (error) {
       setPosition(() => FALLBACK_LOCATION);
       map.flyTo(FALLBACK_LOCATION);
     }
-  }, [location, error, map, setPosition]);
+  }, [userLocation, error, map, setPosition]);
 
   return (
     <TooltipProvider>

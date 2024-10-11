@@ -83,6 +83,9 @@ export const searchSlice = createSlice({
       const { errorMessage } = action.payload;
       state.errorMessage = errorMessage;
     },
+    resetSearchState: () => {
+      return initialState;
+    },
   },
   selectors: {
     selectCurrentSearchTerm: (state) => state.currentSearchTerm,
@@ -98,4 +101,5 @@ export const {
   addToSearchHistory,
   clearSearchHistory,
   setSearchErrorMessage,
+  resetSearchState,
 } = searchSlice.actions;

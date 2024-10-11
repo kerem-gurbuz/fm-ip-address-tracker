@@ -9,13 +9,16 @@ import { domainNameSchema, ipAddressSchema } from '@/lib/definitions/search';
 // TODO: Implement rate limiting to prevent abuse of the API
 // TODO: Implement error logging and reporting (e.g. Sentry)
 
+/* By default, Next.js does not limit the execution of server-side logic (rendering a page or handling an API). Deployment platforms can use maxDuration from the Next.js build output to add specific execution limits.
+
+https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#maxduration */
 export const maxDuration = 5;
 
-const API_URL = process.env.IPIFY_URL;
 const API_KEY = process.env.IPIFY_KEY;
+const API_BASE_URL = process.env.IPIFY_URL;
 const API_ENDPOINT = '/api/v2/country,city';
 
-if (!API_URL || !API_KEY) {
+if (!API_BASE_URL || !API_KEY) {
   throw new Error(
     'Missing required environment variables: IPIFY_URL or IPIFY_KEY',
   );
@@ -47,7 +50,7 @@ export async function GET(request: NextRequest) {
       searchParams.append('domain', domain);
     }
 
-    const url = `${API_URL}${API_ENDPOINT}?${searchParams.toString()}`;
+    const url = `${API_BASE_URL}${API_ENDPOINT}?${searchParams.toString()}`;
 
     const response = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },

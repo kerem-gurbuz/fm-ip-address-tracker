@@ -22,7 +22,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
  * This hook performs the following tasks:
  * 1. Handles geolocation queries for user-entered IP addresses or domain names.
  * 2. Updates the Redux store with the fetched geolocation data.
- * 3. Displays toast notifications for errors in fetching or displaying location data.
+ * 3. Displays toast notifications for errors in fetching location data.
  *
  * The hook uses React Query for data fetching and caching, and interacts with
  * the Redux store for state management. It also utilizes custom schemas for
@@ -84,7 +84,7 @@ export const useGeolocationQueryBySearchTerm = (): void => {
   useEffect(() => {
     if (isIpAddressQueryError) {
       const errorMessage =
-        ipAddressQueryError?.message ?? JSON.stringify(ipAddressQueryError);
+        ipAddressQueryError.message ?? JSON.stringify(ipAddressQueryError);
 
       dispatch(setGeolocationErrorMessage({ errorMessage }));
       dispatch(setCurrentGeolocationData({ geolocationData: null }));
@@ -124,7 +124,7 @@ export const useGeolocationQueryBySearchTerm = (): void => {
   useEffect(() => {
     if (isDomainNameQueryError) {
       const errorMessage =
-        domainNameQueryError?.message ?? JSON.stringify(domainNameQueryError);
+        domainNameQueryError.message ?? JSON.stringify(domainNameQueryError);
 
       dispatch(setGeolocationErrorMessage({ errorMessage }));
       dispatch(setCurrentGeolocationData({ geolocationData: null }));

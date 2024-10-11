@@ -1,8 +1,9 @@
 'use client';
 
+import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 import {
   useGeolocationQueryBySearchTerm,
-  useInitialGeolocationQuery,
+  useInitialGeolocationData,
 } from '@/lib/hooks';
 import { selectCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
 import { useAppSelector } from '@/lib/redux-store/hooks';
@@ -11,10 +12,12 @@ import { InfoCard } from './info-card';
 
 type InfoDisplayProps = {
   className?: React.ComponentProps<'div'>['className'];
+  initialData: GeolocationDataType;
 };
 
-export function InfoDisplay({ className }: InfoDisplayProps) {
-  useInitialGeolocationQuery();
+export function InfoDisplay({ className, initialData }: InfoDisplayProps) {
+  // Custom hooks for managing geolocation data
+  useInitialGeolocationData(initialData);
   useGeolocationQueryBySearchTerm();
 
   const geolocationData = useAppSelector(selectCurrentGeolocationData);

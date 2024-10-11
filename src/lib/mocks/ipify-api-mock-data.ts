@@ -1,8 +1,7 @@
 /* 
   IP Geolocation API
-  ------------------------------------------------------------------------
   https://geo.ipify.org/docs
-  
+  ------------------------------------------------------------------------
   "Country + City" API type features:
 
     - Credits cost per request: 2

@@ -22,6 +22,13 @@ import { useAppDispatch } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 import { ArrowIcon } from './arrow-icon';
 
+/*
+  NOTE
+  ------------------------------------------------------------------------
+  InfoDisplay.tsx
+  Uses: useGeolocationQueryBySearchTerm (reads searchTerm from Redux store)
+ */
+
 const formSchema = z.object({
   input: searchTermSchema,
 });
@@ -53,7 +60,11 @@ export function SearchBar({ className }: SearchBarProps) {
   const dispatch = useAppDispatch();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    dispatch(setCurrentSearchTerm({ searchTerm: values.input }));
+    dispatch(
+      setCurrentSearchTerm({
+        searchTerm: values.input,
+      }),
+    );
   }
 
   useEffect(() => {
