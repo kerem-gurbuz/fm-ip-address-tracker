@@ -1,3 +1,4 @@
+import { getGeolocationData } from '@/lib/data/geolocation';
 import { cn } from '@/lib/utils';
 import { InfoDisplay } from './info-display';
 import { PatternBackground } from './pattern-background';
@@ -7,11 +8,13 @@ type HeaderProps = {
   className?: React.ComponentProps<'header'>['className'];
 };
 
-export function Header({ className }: HeaderProps) {
+export async function Header({ className }: HeaderProps) {
+  const { data: initialData } = await getGeolocationData();
+
   return (
     <header
       id="header"
-      className={cn('relative pt-[26px] md:pt-[33px]', className)}
+      className={cn('relative z-[1100] pt-[26px] md:pt-[33px]', className)}
     >
       <PatternBackground className="absolute inset-0 -z-50" />
       <div className="container h-full max-w-[1110px] px-6 xl:px-0">
@@ -21,7 +24,7 @@ export function Header({ className }: HeaderProps) {
           </h1>
           <SearchBar />
         </div>
-        <InfoDisplay />
+        <InfoDisplay initialData={initialData} />
       </div>
     </header>
   );

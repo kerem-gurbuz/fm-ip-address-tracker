@@ -16,29 +16,55 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { searchInputSchema } from '@/lib/schemas';
+import { searchTermSchema } from '@/lib/definitions/search';
+import { setCurrentSearchTerm } from '@/lib/redux-store/features/search';
+import { useAppDispatch } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 import { ArrowIcon } from './arrow-icon';
+
+/*
+  NOTE
+  ------------------------------------------------------------------------
+  InfoDisplay.tsx
+  Uses: useGeolocationQueryBySearchTerm (reads searchTerm from Redux store)
+ */
+
+const formSchema = z.object({
+  input: searchTermSchema,
+});
 
 type SearchBarProps = {
   className?: React.ComponentProps<'form'>['className'];
 };
 
 export function SearchBar({ className }: SearchBarProps) {
-  const form = useForm<z.infer<typeof searchInputSchema>>({
-    resolver: zodResolver(searchInputSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       input: '',
     },
   });
 
-  const { control, reset } = form;
-  const { errors, isSubmitting, isSubmitSuccessful, isSubmitted, isDirty } =
-    form.formState;
+  const {
+    control,
+    reset,
+    formState: {
+      errors,
+      isSubmitting,
+      isSubmitSuccessful,
+      isSubmitted,
+      isDirty,
+    },
+  } = form;
 
-  function onSubmit(values: z.infer<typeof searchInputSchema>) {
-    // Do something with the form values.
-    console.log(values);
+  const dispatch = useAppDispatch();
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    dispatch(
+      setCurrentSearchTerm({
+        searchTerm: values.input,
+      }),
+    );
   }
 
   useEffect(() => {

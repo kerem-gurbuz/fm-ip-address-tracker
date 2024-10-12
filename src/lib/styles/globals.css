@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Note: z-index
+  ------------------------------------------------------------------------
+  Leaflet...: z-index: 1000
+  Header....: z-index: 1100
+  Error.tsx : z-index: 9000
+  Toast.....: z-index: 9900
+ */
+
 /* style guide colors */
 @layer base {
   :root {
