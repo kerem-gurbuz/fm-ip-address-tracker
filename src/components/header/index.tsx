@@ -14,10 +14,7 @@ export async function Header({ className }: HeaderProps) {
   return (
     <header
       id="header"
-      className={cn(
-        'relative h-[300px] w-full pt-[26px] md:h-[280px] md:pt-[33px]',
-        className,
-      )}
+      className={cn('relative z-[1100] pt-[26px] md:pt-[33px]', className)}
     >
       <PatternBackground className="absolute inset-0 -z-50" />
       <div className="container h-full max-w-[1110px] px-6 xl:px-0">

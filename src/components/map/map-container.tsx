@@ -13,7 +13,7 @@ export const MapContainer = memo(function MapContainer({
   return (
     <LeafletMapContainer
       id="map-container"
-      className="relative h-full w-full"
+      className="relative min-h-screen"
       {...rest}
     >
       {children}

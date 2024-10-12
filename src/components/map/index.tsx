@@ -48,7 +48,7 @@ export default function LeafletMap() {
       />
       <LocationMarker position={position} />
       <ZoomControl position="bottomright" />
-      <div className="absolute bottom-[92px] right-[10px] z-[9000] flex flex-col rounded-[4px] border-2 border-black/20">
+      <div className="absolute bottom-[95px] right-[10px] z-[1000] flex flex-col rounded-[4px] border-2 border-black/20">
         <GetMyLocationBtn setPosition={setPosition} />
         <div className="h-[1px] bg-gray-600" />
         <DisplayPositionBtn center={position} />

@@ -20,10 +20,8 @@ export default function RootLayout({
       <body className={`${rubik.variable} font-sans antialiased`}>
         <ReduxStoreProvider>
           <ReactQueryProvider>
-            <div className="flex min-h-dvh flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-            </div>
+            <Header className="h-[300px] md:h-[280px]" />
+            {children}
             <Toaster />
           </ReactQueryProvider>
         </ReduxStoreProvider>
