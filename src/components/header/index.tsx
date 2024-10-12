@@ -1,4 +1,4 @@
-import { getGeolocationData } from '@/lib/data/geolocation';
+import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 import { cn } from '@/lib/utils';
 import { InfoDisplay } from './info-display';
 import { PatternBackground } from './pattern-background';
@@ -6,11 +6,10 @@ import { SearchBar } from './search-bar';
 
 type HeaderProps = {
   className?: React.ComponentProps<'header'>['className'];
+  initialData: GeolocationDataType;
 };
 
-export async function Header({ className }: HeaderProps) {
-  const { data: initialData } = await getGeolocationData();
-
+export function Header({ className, initialData }: HeaderProps) {
   return (
     <header
       id="header"

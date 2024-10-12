@@ -6,8 +6,8 @@ const LeafletMap = dynamic(() => import('@/components/map'), {
 
 export default function HomeScreen() {
   return (
-    <main id="home-screen">
+    <div id="home-screen">
       <LeafletMap />
-    </main>
+    </div>
   );
 }

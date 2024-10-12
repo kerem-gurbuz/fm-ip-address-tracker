@@ -1,4 +1,3 @@
-import { Header } from '@/components/header';
 import { ReactQueryProvider, ReduxStoreProvider } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
 import { preloadInitialGeolocationData } from '@/lib/data/geolocation';
@@ -20,7 +19,6 @@ export default function RootLayout({
       <body className={`${rubik.variable} font-sans antialiased`}>
         <ReduxStoreProvider>
           <ReactQueryProvider>
-            <Header className="h-[300px] md:h-[280px]" />
             {children}
             <Toaster />
           </ReactQueryProvider>

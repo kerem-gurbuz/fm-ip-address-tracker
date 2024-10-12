@@ -1,8 +1,11 @@
 import { createSelectorWeakMap } from '@/lib/utils';
 import { geolocationSlice } from './geolocation-slice';
 
-export const { selectCurrentGeolocationData, selectGeolocationErrorMessage } =
-  geolocationSlice.selectors;
+export const {
+  selectCurrentGeolocationData,
+  selectGeolocationErrorMessage,
+  selectFallbackLocation,
+} = geolocationSlice.selectors;
 
 export const selectCurrentPosition = createSelectorWeakMap(
   [selectCurrentGeolocationData],

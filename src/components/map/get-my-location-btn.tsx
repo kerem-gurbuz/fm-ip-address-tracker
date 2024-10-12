@@ -11,19 +11,9 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useUserLocation } from '@/lib/hooks';
+import { selectFallbackLocation } from '@/lib/redux-store/features/geolocation';
+import { useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
-
-/**
- * Anıtkabir, Ankara, Turkey
- * -------------------------------------------------------------------------
- * Latitude and longitude coordinates are: 39.925018, 32.836956
- *
- * Anıtkabir (literally, "memorial tomb") is the mausoleum of Mustafa Kemal Atatürk, the leader of the Turkish War of Independence and the founder and first President of the Republic of Turkey.
- */
-const FALLBACK_LOCATION: LatLngExpression = {
-  lat: 39.925018,
-  lng: 32.836956,
-};
 
 type GetMyLocationBtnProps = {
   className?: React.ComponentProps<'button'>['className'];
@@ -34,8 +24,9 @@ export function GetMyLocationBtn({
   className,
   setPosition,
 }: GetMyLocationBtnProps) {
-  const map = useMap();
   const { loading, location: userLocation, error } = useUserLocation();
+  const fallbackLocation = useAppSelector(selectFallbackLocation);
+  const map = useMap();
 
   const handleClick = useCallback(() => {
     if (userLocation) {
@@ -43,10 +34,10 @@ export function GetMyLocationBtn({
       map.flyTo(userLocation as LatLngExpression);
     }
     if (error) {
-      setPosition(() => FALLBACK_LOCATION);
-      map.flyTo(FALLBACK_LOCATION);
+      setPosition(() => fallbackLocation);
+      map.flyTo(fallbackLocation);
     }
-  }, [userLocation, error, map, setPosition]);
+  }, [userLocation, error, fallbackLocation, map, setPosition]);
 
   return (
     <TooltipProvider>
