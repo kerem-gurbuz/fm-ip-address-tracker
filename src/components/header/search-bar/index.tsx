@@ -90,7 +90,7 @@ export function SearchBar({ className }: SearchBarProps) {
                   type="text"
                   placeholder="Search for any IP address or domain"
                   className={cn(
-                    'h-[58px] rounded-[15px] border-none bg-white px-[24px] pb-[19px] pt-[18px] text-[18px] leading-[21px] text-very-dark-gray transition-all duration-500 placeholder:text-very-dark-gray placeholder:opacity-50 focus-visible:ring-2 focus-visible:ring-transparent max-[480px]:placeholder-transparent',
+                    'h-[58px] rounded-[15px] border-none bg-white px-[24px] pb-[19px] pt-[18px] text-[18px] leading-[21px] text-very-dark-gray transition-all duration-300 placeholder:text-very-dark-gray placeholder:opacity-50 focus-visible:ring-2 focus-visible:ring-transparent max-[480px]:placeholder-transparent',
                     {
                       'text-form-error-state focus-visible:ring-form-error-state':
                         errors.input,
@@ -113,7 +113,7 @@ export function SearchBar({ className }: SearchBarProps) {
           aria-label="Search"
           disabled={isSubmitting}
           className={cn(
-            'absolute right-0 top-0 z-10 h-[58px] w-[58px] rounded-none rounded-r-[13px] bg-black transition-colors duration-500 hover:bg-[#3F3F3F]',
+            'absolute right-0 top-0 z-10 h-[58px] w-[58px] rounded-none rounded-r-[13px] bg-black transition-colors duration-300 hover:bg-[#3F3F3F]',
             {
               'bg-form-error-state hover:bg-form-error-state': errors.input,
               'bg-form-success-state hover:bg-form-success-state':

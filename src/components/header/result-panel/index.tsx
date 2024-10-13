@@ -1,5 +1,11 @@
 'use client';
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 import {
   useGeolocationDataBySearchTerm,
@@ -7,15 +13,13 @@ import {
 } from '@/lib/hooks';
 import { selectCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
 import { useAppSelector } from '@/lib/redux-store/hooks';
-import { cn } from '@/lib/utils';
 import { ResultCard } from './result-card';
 
 type ResultPanelProps = {
-  className?: React.ComponentProps<'div'>['className'];
   initialData: GeolocationDataType;
 };
 
-export function ResultPanel({ className, initialData }: ResultPanelProps) {
+export function ResultPanel({ initialData }: ResultPanelProps) {
   // Custom hooks for managing geolocation data
   useInitialGeolocationData(initialData);
   useGeolocationDataBySearchTerm();
@@ -26,13 +30,20 @@ export function ResultPanel({ className, initialData }: ResultPanelProps) {
   }
 
   return (
-    <div
-      className={cn(
-        'grid grid-cols-1 gap-y-6 rounded-[15px] bg-white p-6 pt-[26px] shadow-[0_50px_50px_-25px_rgba(0,0,0,0.10)] min-[480px]:grid-cols-2 md:gap-y-0 md:p-0 lg:grid-cols-4',
-        className,
-      )}
+    <Accordion
+      type="single"
+      collapsible
+      defaultValue="accordion-item-1"
+      className="overflow-hidden rounded-[15px] bg-white shadow-[0_50px_50px_-25px_rgba(0,0,0,0.10)]"
     >
-      <ResultCard data={geolocationData} />
-    </div>
+      <AccordionItem value="accordion-item-1">
+        <AccordionTrigger className="bg-black px-6 py-[15px] text-lg font-medium text-white hover:bg-[#3F3F3F] md:px-8">
+          IP Insights
+        </AccordionTrigger>
+        <AccordionContent className="grid grid-cols-1 gap-y-6 p-6 pt-[26px] min-[480px]:grid-cols-2 md:gap-y-0 md:p-0 lg:grid-cols-4">
+          <ResultCard data={geolocationData} />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
