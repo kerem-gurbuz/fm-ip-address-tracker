@@ -44,19 +44,25 @@ export function GetMyLocationBtn({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            aria-label="Get my location"
+            onClick={handleClick}
+            disabled={loading}
             className={cn(
-              'h-[30px] w-[30px] rounded-none rounded-t-[2px] p-0',
+              'h-[30px] w-[40px] rounded-none bg-white p-0 hover:bg-[#f4f4f4]',
               { 'bg-red-700 hover:bg-red-700/90': Boolean(error) },
               className,
             )}
-            onClick={handleClick}
-            disabled={loading}
           >
-            <HouseIcon className="h-5 w-5 stroke-white" />
+            <HouseIcon
+              className={cn('h-5 w-5 stroke-black', {
+                'stroke-white': Boolean(error),
+              })}
+            />
+            <span className="sr-only">Get my location</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent
-          side="left"
+          side="top"
           className={cn({ 'bg-red-700 text-white': Boolean(error) })}
         >
           <p className="font-bold">{error || 'Get My Location'}</p>

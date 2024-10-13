@@ -1,7 +1,7 @@
 import { Header } from '@/components/header';
 import { getGeolocationData } from '@/lib/data/geolocation';
 
-export default async function HomeLayout({
+export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
@@ -9,9 +9,9 @@ export default async function HomeLayout({
   const { data: initialData } = await getGeolocationData();
 
   return (
-    <div id="home-layout" className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col">
       <Header className="h-[300px] md:h-[280px]" initialData={initialData} />
-      <main className="flex-1">{children}</main>
+      {children}
     </div>
   );
 }

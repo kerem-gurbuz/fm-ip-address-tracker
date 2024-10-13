@@ -1,4 +1,11 @@
+'use client';
+
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
+import {
+  selectIsFullscreenMap,
+  selectShowResultPanel,
+} from '@/lib/redux-store/features/ui';
+import { useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 import { InfoDisplay } from './info-display';
 import { PatternBackground } from './pattern-background';
@@ -10,6 +17,13 @@ type HeaderProps = {
 };
 
 export function Header({ className, initialData }: HeaderProps) {
+  const isFullscreenMap = useAppSelector(selectIsFullscreenMap);
+  const showResultPanel = useAppSelector(selectShowResultPanel);
+
+  if (isFullscreenMap) {
+    return null;
+  }
+
   return (
     <header
       id="header"
@@ -23,7 +37,7 @@ export function Header({ className, initialData }: HeaderProps) {
           </h1>
           <SearchBar />
         </div>
-        <InfoDisplay initialData={initialData} />
+        {showResultPanel ? <InfoDisplay initialData={initialData} /> : null}
       </div>
     </header>
   );

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { geolocationSlice } from './features/geolocation';
 import { searchSlice } from './features/search';
+import { uiSlice } from './features/ui';
 
 /* 
   "makeStore" encapsulates the store configuration to allow creating unique store instances, which is particularly important for server-side rendering (SSR) scenarios. In SSR, separate store instances are needed for each request to prevent cross-request state pollution.
@@ -9,8 +10,9 @@ import { searchSlice } from './features/search';
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      search: searchSlice.reducer,
       geolocation: geolocationSlice.reducer,
+      search: searchSlice.reducer,
+      ui: uiSlice.reducer,
     },
   });
 };
