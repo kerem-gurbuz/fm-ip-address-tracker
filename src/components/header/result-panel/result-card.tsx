@@ -1,12 +1,12 @@
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
-import { InfoItem } from './info-item';
-import { InfoSeparator } from './info-separator';
+import { ResultItem } from './result-item';
+import { ResultSeparator } from './result-separator';
 
-type InfoCardProps = {
+type ResultCardProps = {
   data: GeolocationDataType;
 };
 
-export function InfoCard({ data }: InfoCardProps) {
+export function ResultCard({ data }: ResultCardProps) {
   const { ip, location, isp } = data;
   const { city, region, timezone, postalCode } = location;
 
@@ -34,9 +34,9 @@ export function InfoCard({ data }: InfoCardProps) {
       key={index}
       className="relative inset-0 flex justify-center min-[480px]:justify-start lg:min-h-[161px]"
     >
-      <InfoItem index={index} label={label} value={value} />
+      <ResultItem index={index} label={label} value={value} />
       {index !== formattedData.length - 1 ? (
-        <InfoSeparator index={index} />
+        <ResultSeparator index={index} />
       ) : null}
     </div>
   ));

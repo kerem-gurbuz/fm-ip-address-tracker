@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
 
-type InfoItemProps = {
+type ResultItemProps = {
   index: number;
   label: string;
   value: string;
 };
 
-export function InfoItem({ index, label, value }: InfoItemProps) {
+export function ResultItem({ index, label, value }: ResultItemProps) {
   return (
     <div
       className={cn(

@@ -2,23 +2,23 @@
 
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 import {
-  useGeolocationQueryBySearchTerm,
+  useGeolocationDataBySearchTerm,
   useInitialGeolocationData,
 } from '@/lib/hooks';
 import { selectCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
 import { useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
-import { InfoCard } from './info-card';
+import { ResultCard } from './result-card';
 
-type InfoDisplayProps = {
+type ResultPanelProps = {
   className?: React.ComponentProps<'div'>['className'];
   initialData: GeolocationDataType;
 };
 
-export function InfoDisplay({ className, initialData }: InfoDisplayProps) {
+export function ResultPanel({ className, initialData }: ResultPanelProps) {
   // Custom hooks for managing geolocation data
   useInitialGeolocationData(initialData);
-  useGeolocationQueryBySearchTerm();
+  useGeolocationDataBySearchTerm();
 
   const geolocationData = useAppSelector(selectCurrentGeolocationData);
   if (!geolocationData) {
@@ -32,7 +32,7 @@ export function InfoDisplay({ className, initialData }: InfoDisplayProps) {
         className,
       )}
     >
-      <InfoCard data={geolocationData} />
+      <ResultCard data={geolocationData} />
     </div>
   );
 }

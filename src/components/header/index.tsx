@@ -7,8 +7,8 @@ import {
 } from '@/lib/redux-store/features/ui';
 import { useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
-import { InfoDisplay } from './info-display';
 import { PatternBackground } from './pattern-background';
+import { ResultPanel } from './result-panel';
 import { SearchBar } from './search-bar';
 
 type HeaderProps = {
@@ -37,7 +37,7 @@ export function Header({ className, initialData }: HeaderProps) {
           </h1>
           <SearchBar />
         </div>
-        {showResultPanel ? <InfoDisplay initialData={initialData} /> : null}
+        {showResultPanel ? <ResultPanel initialData={initialData} /> : null}
       </div>
     </header>
   );

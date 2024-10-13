@@ -30,7 +30,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
  *
  * @returns {void}
  */
-export const useGeolocationQueryBySearchTerm = (): void => {
+export const useGeolocationDataBySearchTerm = (): void => {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
