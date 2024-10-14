@@ -1,7 +1,7 @@
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const API_ENDPOINT = '/api/ip-geolocation';
+const API_ENDPOINT = '/api/ipify';
 
 type GetGeolocationDataParams = {
   ipAddress?: string;
