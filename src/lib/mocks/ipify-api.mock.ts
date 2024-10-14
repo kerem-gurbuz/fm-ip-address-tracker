@@ -21,7 +21,7 @@
     - escapedUnicode  : Optional
  */
 
-export const IPIFY_MOCK_DATA = {
+export const IPIFY_API_MOCK = {
   ip: '8.8.8.8',
   location: {
     country: 'US',

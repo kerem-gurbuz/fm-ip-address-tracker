@@ -15,6 +15,16 @@ import { ToggleFullscreenBtn } from './toggle-fullscreen-btn';
 
 import 'leaflet/dist/leaflet.css';
 
+/*
+  Note: z-index
+  ------------------------------------------------------------------------
+  Leaflet...: z-index: 1000
+  Header....: z-index: 1100
+  Sidebar...: z-index: 1200
+  Error.tsx : z-index: 9000
+  Toast.....: z-index: 9900
+ */
+
 export default function LeafletMap() {
   const currentPosition = useAppSelector(selectCurrentPosition);
   const mapZoomLevel = useAppSelector(selectMapZoomLevel);
