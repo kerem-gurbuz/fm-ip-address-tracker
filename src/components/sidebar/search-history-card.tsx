@@ -3,9 +3,12 @@ import { ClockIcon, MapPinIcon, Trash2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import type { SearchHistoryEntryType } from '@/lib/definitions/search';
-import { setCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
+import {
+  selectCurrentGeolocationData,
+  setCurrentGeolocationData,
+} from '@/lib/redux-store/features/geolocation';
 import { deleteSearchHistoryEntry } from '@/lib/redux-store/features/search';
-import { useAppDispatch } from '@/lib/redux-store/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
 
 type SearchHistoryCardProps = {
   entry: SearchHistoryEntryType;
@@ -13,6 +16,7 @@ type SearchHistoryCardProps = {
 
 export function SearchHistoryCard({ entry }: SearchHistoryCardProps) {
   const dispatch = useAppDispatch();
+  const currentGeolocationData = useAppSelector(selectCurrentGeolocationData);
 
   const { searchTerm: query, timestamp, data } = entry;
   const { city, region, postalCode, timezone } = data.location;
@@ -29,7 +33,15 @@ export function SearchHistoryCard({ entry }: SearchHistoryCardProps) {
   const handleDeleteEntry = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     dispatch(deleteSearchHistoryEntry({ entryTimestamp: timestamp }));
-    dispatch(setCurrentGeolocationData({ geolocationData: null }));
+
+    if (currentGeolocationData) {
+      if (
+        currentGeolocationData.location.lat === entry.data.location.lat &&
+        currentGeolocationData.location.lng === entry.data.location.lng
+      ) {
+        dispatch(setCurrentGeolocationData({ geolocationData: null }));
+      }
+    }
   };
 
   return (

@@ -7,7 +7,7 @@ export const {
   selectFallbackLocation,
 } = geolocationSlice.selectors;
 
-export const selectCurrentPosition = createSelectorWeakMap(
+export const selectCurrentCoordinates = createSelectorWeakMap(
   [selectCurrentGeolocationData],
   (currentGeolocationData) => {
     return currentGeolocationData

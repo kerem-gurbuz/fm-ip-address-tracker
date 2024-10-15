@@ -11,16 +11,6 @@ import { PatternBackground } from './pattern-background';
 import { ResultPanel } from './result-panel';
 import { SearchBar } from './search-bar';
 
-/*
-  Note: z-index
-  ------------------------------------------------------------------------
-  Leaflet...: z-index: 1000
-  Header....: z-index: 1100
-  Sidebar...: z-index: 1200
-  Error.tsx : z-index: 9000
-  Toast.....: z-index: 9900
- */
-
 type HeaderProps = {
   className?: React.ComponentProps<'header'>['className'];
   initialData: GeolocationDataType;

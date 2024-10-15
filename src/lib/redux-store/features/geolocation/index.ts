@@ -7,7 +7,7 @@ export {
 
 export {
   selectCurrentGeolocationData,
-  selectCurrentPosition,
+  selectCurrentCoordinates,
   selectFallbackLocation,
   selectGeolocationErrorMessage,
 } from './geolocation-selectors';

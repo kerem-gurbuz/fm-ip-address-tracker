@@ -4,7 +4,7 @@ import type { LatLngExpression } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { TileLayer, ZoomControl } from 'react-leaflet';
 
-import { selectCurrentPosition } from '@/lib/redux-store/features/geolocation';
+import { selectCurrentCoordinates } from '@/lib/redux-store/features/geolocation';
 import { selectMapZoomLevel } from '@/lib/redux-store/features/ui';
 import { useAppSelector } from '@/lib/redux-store/hooks';
 import { DisplayPositionBtn } from './display-position-btn';
@@ -15,28 +15,27 @@ import { ToggleFullscreenBtn } from './toggle-fullscreen-btn';
 
 import 'leaflet/dist/leaflet.css';
 
-/*
-  Note: z-index
+/* 
+  NOTES
   ------------------------------------------------------------------------
-  Leaflet...: z-index: 1000
-  Header....: z-index: 1100
-  Sidebar...: z-index: 1200
-  Error.tsx : z-index: 9000
-  Toast.....: z-index: 9900
+  - currentCoordinates: Coordinates of the active geolocation data.
+  - position: Position of the map.
+  - Zoom levels (https://leafletjs.com/examples/zoom-levels/):
+    Lower zoom levels means that the map shows entire continents, while higher zoom levels means that the map can show details of a city.
  */
 
 export default function LeafletMap() {
-  const currentPosition = useAppSelector(selectCurrentPosition);
   const mapZoomLevel = useAppSelector(selectMapZoomLevel);
+  const currentCoordinates = useAppSelector(selectCurrentCoordinates);
   const [position, setPosition] = useState<LatLngExpression | null>(
-    currentPosition,
+    currentCoordinates,
   );
 
   useEffect(() => {
-    if (currentPosition) {
-      setPosition(() => currentPosition);
+    if (currentCoordinates) {
+      setPosition(() => currentCoordinates);
     }
-  }, [currentPosition]);
+  }, [currentCoordinates]);
 
   if (!position) {
     return null;
@@ -55,9 +54,8 @@ export default function LeafletMap() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <LocationMarker position={position} />
+      {currentCoordinates ? <LocationMarker position={position} /> : null}
       <ZoomControl position="bottomright" />
-      {/* Map Control */}
       <div className="absolute bottom-[27px] left-1/2 z-[1000] flex -translate-x-1/2 rounded-full border-2 border-black/20">
         <DisplayPositionBtn center={position} />
         <div className="w-[1px] bg-black/20" />

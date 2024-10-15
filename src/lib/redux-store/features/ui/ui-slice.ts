@@ -31,13 +31,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
     - highContrastMode (TODO): A boolean to toggle high contrast mode for better visibility
  */
 
-/* 
-  NOTE: Zoom levels
-        https://leafletjs.com/examples/zoom-levels/
-  ------------------------------------------------------------------------
-  Lower zoom levels means that the map shows entire continents, while higher zoom levels means that the map can show details of a city.
- */
-
 type UIState = {
   mapZoomLevel: number;
   isFullscreenMap: boolean;
