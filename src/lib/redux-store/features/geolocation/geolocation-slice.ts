@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { LatLngExpression } from 'leaflet';
 
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
-import type { LatLngExpression } from 'leaflet';
 
 /* 
   Anıtkabir, Ankara, Turkey

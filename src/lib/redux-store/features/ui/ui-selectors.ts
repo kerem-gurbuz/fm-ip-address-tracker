@@ -4,5 +4,4 @@ export const {
   selectMapZoomLevel,
   selectIsFullscreenMap,
   selectShowResultPanel,
-  selectSidebarCollapsed,
 } = uiSlice.selectors;

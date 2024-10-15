@@ -5,7 +5,6 @@ import type {
   SearchHistoryType,
   SearchTermType,
 } from '@/lib/definitions/search';
-
 import {
   clearSearchHistoryFromLocalStorage,
   getSearchHistoryFromLocalStorage,
@@ -72,6 +71,17 @@ export const searchSlice = createSlice({
       state.searchHistory = updatedHistory;
       saveSearchHistoryToLocalStorage(updatedHistory);
     },
+    deleteSearchHistoryEntry: (
+      state,
+      action: PayloadAction<{ entryTimestamp: number }>,
+    ) => {
+      const { entryTimestamp } = action.payload;
+      const updatedHistory = state.searchHistory.filter(
+        (entry) => entry.timestamp !== entryTimestamp,
+      );
+      state.searchHistory = updatedHistory;
+      saveSearchHistoryToLocalStorage(updatedHistory);
+    },
     clearSearchHistory: (state) => {
       state.searchHistory = [];
       clearSearchHistoryFromLocalStorage();
@@ -102,4 +112,5 @@ export const {
   clearSearchHistory,
   setSearchErrorMessage,
   resetSearchState,
+  deleteSearchHistoryEntry,
 } = searchSlice.actions;

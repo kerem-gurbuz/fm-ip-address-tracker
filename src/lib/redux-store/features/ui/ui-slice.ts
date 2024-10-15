@@ -20,11 +20,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
     - isDarkMode (TODO): A boolean to toggle between light and dark themes
     - accentColor (TODO): To store the current accent color for UI elements
 
-  # Responsive design:
-
-    - sidebarCollapsed: A boolean to control the collapse state of the sidebar
-    - isMobileView (TODO): A boolean to indicate if the app is in mobile view
-
   # Loading states:
 
     - isLoading (TODO): A boolean to indicate if any data is being fetched
@@ -47,14 +42,12 @@ type UIState = {
   mapZoomLevel: number;
   isFullscreenMap: boolean;
   showResultPanel: boolean;
-  sidebarCollapsed: boolean;
 };
 
 const initialState: UIState = {
   mapZoomLevel: 13,
   isFullscreenMap: false,
   showResultPanel: true,
-  sidebarCollapsed: false,
 };
 
 export const uiSlice = createSlice({
@@ -70,21 +63,13 @@ export const uiSlice = createSlice({
     toggleShowResultPanel: (state) => {
       state.showResultPanel = !state.showResultPanel;
     },
-    toggleSidebarCollapsed: (state) => {
-      state.sidebarCollapsed = !state.sidebarCollapsed;
-    },
   },
   selectors: {
     selectMapZoomLevel: (state) => state.mapZoomLevel,
     selectIsFullscreenMap: (state) => state.isFullscreenMap,
     selectShowResultPanel: (state) => state.showResultPanel,
-    selectSidebarCollapsed: (state) => state.sidebarCollapsed,
   },
 });
 
-export const {
-  setMapZoomLevel,
-  toggleFullscreenMap,
-  toggleShowResultPanel,
-  toggleSidebarCollapsed,
-} = uiSlice.actions;
+export const { setMapZoomLevel, toggleFullscreenMap, toggleShowResultPanel } =
+  uiSlice.actions;
