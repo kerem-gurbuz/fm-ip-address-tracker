@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { appSlice } from './features/app';
 import { geolocationSlice } from './features/geolocation';
 import { searchSlice } from './features/search';
 import { uiSlice } from './features/ui';
@@ -10,6 +11,7 @@ import { uiSlice } from './features/ui';
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      app: appSlice.reducer,
       geolocation: geolocationSlice.reducer,
       search: searchSlice.reducer,
       ui: uiSlice.reducer,

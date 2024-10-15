@@ -30,7 +30,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
  *
  * @returns {void}
  */
-export const useGeolocationDataBySearchTerm = (): void => {
+export function useGeolocationDataBySearchTerm(): void {
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 
@@ -136,4 +136,4 @@ export const useGeolocationDataBySearchTerm = (): void => {
       });
     }
   }, [isDomainNameQueryError, domainNameQueryError, dispatch, toast]);
-};
+}

@@ -1,14 +1,17 @@
-import type { GeolocationDataType } from '@/lib/definitions/geolocation';
+import { selectCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
+import { useAppSelector } from '@/lib/redux-store/hooks';
 import { ResultItem } from './result-item';
 import { ResultSeparator } from './result-separator';
 
-type ResultCardProps = {
-  data: GeolocationDataType;
-};
+export function ResultCard() {
+  const geolocationData = useAppSelector(selectCurrentGeolocationData);
+  if (!geolocationData) return null;
 
-export function ResultCard({ data }: ResultCardProps) {
-  const { ip, location, isp } = data;
-  const { city, region, timezone, postalCode } = location;
+  const {
+    ip,
+    isp,
+    location: { city, region, timezone, postalCode },
+  } = geolocationData;
 
   const formattedData = [
     {

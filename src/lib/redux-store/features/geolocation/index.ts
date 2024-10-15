@@ -6,8 +6,8 @@ export {
 } from './geolocation-slice';
 
 export {
-  selectCurrentGeolocationData,
   selectCurrentCoordinates,
+  selectCurrentGeolocationData,
   selectFallbackLocation,
   selectGeolocationErrorMessage,
 } from './geolocation-selectors';

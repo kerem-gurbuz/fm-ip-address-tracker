@@ -2,6 +2,10 @@
 
 import type { GeolocationDataType } from '@/lib/definitions/geolocation';
 import {
+  useGeolocationDataBySearchTerm,
+  useInitialGeolocationData,
+} from '@/lib/hooks';
+import {
   selectIsFullscreenMap,
   selectShowResultPanel,
 } from '@/lib/redux-store/features/ui';
@@ -13,10 +17,14 @@ import { SearchBar } from './search-bar';
 
 type HeaderProps = {
   className?: React.ComponentProps<'header'>['className'];
-  initialData: GeolocationDataType;
+  initialGeolocationData: GeolocationDataType;
 };
 
-export function Header({ className, initialData }: HeaderProps) {
+export function Header({ className, initialGeolocationData }: HeaderProps) {
+  // Custom hooks for managing geolocation data
+  useInitialGeolocationData(initialGeolocationData);
+  useGeolocationDataBySearchTerm();
+
   const isFullscreenMap = useAppSelector(selectIsFullscreenMap);
   const showResultPanel = useAppSelector(selectShowResultPanel);
 
@@ -37,7 +45,7 @@ export function Header({ className, initialData }: HeaderProps) {
           </h1>
           <SearchBar />
         </div>
-        {showResultPanel ? <ResultPanel initialData={initialData} /> : null}
+        {showResultPanel ? <ResultPanel /> : null}
       </div>
     </header>
   );

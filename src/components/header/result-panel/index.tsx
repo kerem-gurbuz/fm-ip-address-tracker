@@ -1,34 +1,12 @@
-'use client';
-
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import type { GeolocationDataType } from '@/lib/definitions/geolocation';
-import {
-  useGeolocationDataBySearchTerm,
-  useInitialGeolocationData,
-} from '@/lib/hooks';
-import { selectCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
-import { useAppSelector } from '@/lib/redux-store/hooks';
 import { ResultCard } from './result-card';
 
-type ResultPanelProps = {
-  initialData: GeolocationDataType;
-};
-
-export function ResultPanel({ initialData }: ResultPanelProps) {
-  // Custom hooks for managing geolocation data
-  useInitialGeolocationData(initialData);
-  useGeolocationDataBySearchTerm();
-
-  const geolocationData = useAppSelector(selectCurrentGeolocationData);
-  if (!geolocationData) {
-    return null;
-  }
-
+export function ResultPanel() {
   return (
     <Accordion
       type="single"
@@ -41,7 +19,7 @@ export function ResultPanel({ initialData }: ResultPanelProps) {
           <h2 className="text-lg font-medium text-white">IP Insights</h2>
         </AccordionTrigger>
         <AccordionContent className="grid grid-cols-1 gap-y-6 p-6 pt-[26px] min-[480px]:grid-cols-2 md:gap-y-0 md:p-0 lg:grid-cols-4">
-          <ResultCard data={geolocationData} />
+          <ResultCard />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

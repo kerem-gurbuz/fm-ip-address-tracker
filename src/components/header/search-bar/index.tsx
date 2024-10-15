@@ -1,5 +1,3 @@
-'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -25,8 +23,8 @@ import { ArrowIcon } from './arrow-icon';
 /*
   NOTE
   ------------------------------------------------------------------------
-  InfoDisplay.tsx
-  Uses: useGeolocationQueryBySearchTerm (reads searchTerm from Redux store)
+  Header.tsx
+  Uses: useGeolocationDataBySearchTerm (reads searchTerm from Redux store)
  */
 
 const formSchema = z.object({
