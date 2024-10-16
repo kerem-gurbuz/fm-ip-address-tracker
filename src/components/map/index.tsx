@@ -1,42 +1,72 @@
 'use client';
 
-import type { LatLngExpression } from 'leaflet';
+import type { LatLngTuple } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { TileLayer, ZoomControl } from 'react-leaflet';
 
-import { selectCurrentPosition } from '@/lib/redux-store/features/geolocation';
-import { useAppSelector } from '@/lib/redux-store/hooks';
-import { DisplayPositionBtn } from './display-position-brn';
+import {
+  selectCurrentCoordinates,
+  selectUserLocation,
+} from '@/lib/redux-store/features/geolocation';
+import {
+  selectIsHomeLocation,
+  selectMapZoomLevel,
+  setIsHomeLocation,
+} from '@/lib/redux-store/features/ui';
+import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
+import { DisplayPositionBtn } from './display-position-btn';
 import { GetMyLocationBtn } from './get-my-location-btn';
 import { LocationMarker } from './location-marker';
 import { MapContainer } from './map-container';
+import { ToggleFullscreenBtn } from './toggle-fullscreen-btn';
 
 import 'leaflet/dist/leaflet.css';
 
-/**
- * Lower zoom levels means that the map shows entire continents, while higher zoom levels means that the map can show details of a city.
- * https://leafletjs.com/examples/zoom-levels/
+/* 
+  NOTES
+  ------------------------------------------------------------------------
+  - position: Position of the map.
+  - currentCoordinates: Coordinates of the active geolocation data.
+  - userLocation: Coordinates of the user's current (home) location.
+  - isHomeLocation (redux-store/features/ui/ui-slice.ts): 
+    A boolean to control the visibility of the user's current location indicator.
+  - mapZoomLevel (https://leafletjs.com/examples/zoom-levels/):
+    Lower zoom levels means that the map shows entire continents, while higher zoom levels means that the map can show details of a city.
  */
-const ZOOM_LEVEL = 13;
 
 export default function LeafletMap() {
-  const currentPosition = useAppSelector(selectCurrentPosition);
-  const [position, setPosition] = useState<LatLngExpression | null>(
-    currentPosition,
+  const dispatch = useAppDispatch();
+  const currentCoordinates = useAppSelector(selectCurrentCoordinates);
+  const userLocation = useAppSelector(selectUserLocation);
+  const isHomeLocation = useAppSelector(selectIsHomeLocation);
+  const mapZoomLevel = useAppSelector(selectMapZoomLevel);
+
+  const [position, setPosition] = useState<LatLngTuple | null>(
+    currentCoordinates,
   );
 
   useEffect(() => {
-    if (currentPosition) {
-      setPosition(() => currentPosition);
+    if (currentCoordinates) {
+      setPosition(() => currentCoordinates);
     }
-  }, [currentPosition]);
+  }, [currentCoordinates, dispatch]);
 
-  if (!position) return null;
+  useEffect(() => {
+    if (position && userLocation) {
+      const isHomeLocation =
+        position[0] === userLocation[0] && position[1] === userLocation[1];
+      dispatch(setIsHomeLocation({ isHomeLocation }));
+    }
+  }, [position, userLocation, dispatch]);
+
+  if (!position) {
+    return null; // TODO: Add loading state
+  }
 
   return (
     <MapContainer
       center={position}
-      zoom={ZOOM_LEVEL}
+      zoom={mapZoomLevel}
       zoomControl={false}
       zoomAnimation
       scrollWheelZoom
@@ -46,12 +76,16 @@ export default function LeafletMap() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <LocationMarker position={position} />
+      {currentCoordinates || isHomeLocation ? (
+        <LocationMarker position={position} />
+      ) : null}
       <ZoomControl position="bottomright" />
-      <div className="absolute bottom-[95px] right-[10px] z-[1000] flex flex-col rounded-[4px] border-2 border-black/20">
-        <GetMyLocationBtn setPosition={setPosition} />
-        <div className="h-[1px] bg-gray-600" />
+      <div className="absolute bottom-[27px] left-1/2 z-[1000] flex -translate-x-1/2 rounded-full border-2 border-black/20">
         <DisplayPositionBtn center={position} />
+        <div className="w-[1px] bg-black/20" />
+        <GetMyLocationBtn setPosition={setPosition} />
+        <div className="w-[1px] bg-black/20" />
+        <ToggleFullscreenBtn />
       </div>
     </MapContainer>
   );

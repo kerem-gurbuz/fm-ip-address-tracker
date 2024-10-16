@@ -1,4 +1,4 @@
-import type { LatLngExpression } from 'leaflet';
+import type { LatLngTuple } from 'leaflet';
 import { HouseIcon } from 'lucide-react';
 import { useCallback, type Dispatch, type SetStateAction } from 'react';
 import { useMap } from 'react-leaflet';
@@ -11,61 +11,60 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useUserLocation } from '@/lib/hooks';
+import { selectFallbackLocation } from '@/lib/redux-store/features/geolocation';
+import { setUserLocation } from '@/lib/redux-store/features/geolocation/geolocation-slice';
+import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
-
-/**
- * Anıtkabir, Ankara, Turkey
- * -------------------------------------------------------------------------
- * Latitude and longitude coordinates are: 39.925018, 32.836956
- *
- * Anıtkabir (literally, "memorial tomb") is the mausoleum of Mustafa Kemal Atatürk, the leader of the Turkish War of Independence and the founder and first President of the Republic of Turkey.
- */
-const FALLBACK_LOCATION: LatLngExpression = {
-  lat: 39.925018,
-  lng: 32.836956,
-};
 
 type GetMyLocationBtnProps = {
   className?: React.ComponentProps<'button'>['className'];
-  setPosition: Dispatch<SetStateAction<LatLngExpression | null>>;
+  setPosition: Dispatch<SetStateAction<LatLngTuple | null>>;
 };
 
 export function GetMyLocationBtn({
   className,
   setPosition,
 }: GetMyLocationBtnProps) {
-  const map = useMap();
   const { loading, location: userLocation, error } = useUserLocation();
+  const fallbackLocation = useAppSelector(selectFallbackLocation);
+  const dispatch = useAppDispatch();
+  const map = useMap();
 
   const handleClick = useCallback(() => {
     if (userLocation) {
-      setPosition(() => userLocation as LatLngExpression);
-      map.flyTo(userLocation as LatLngExpression);
+      dispatch(setUserLocation({ userLocation }));
+      setPosition(() => userLocation);
     }
     if (error) {
-      setPosition(() => FALLBACK_LOCATION);
-      map.flyTo(FALLBACK_LOCATION);
+      setPosition(() => fallbackLocation);
+      map.flyTo(fallbackLocation);
     }
-  }, [userLocation, error, map, setPosition]);
+  }, [userLocation, error, fallbackLocation, map, dispatch, setPosition]);
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            aria-label="Get my location"
+            onClick={handleClick}
+            disabled={loading}
             className={cn(
-              'h-[30px] w-[30px] rounded-none rounded-t-[2px] p-0',
+              'h-[30px] w-[40px] rounded-none bg-white p-0 hover:bg-[#f4f4f4]',
               { 'bg-red-700 hover:bg-red-700/90': Boolean(error) },
               className,
             )}
-            onClick={handleClick}
-            disabled={loading}
           >
-            <HouseIcon className="h-5 w-5 stroke-white" />
+            <HouseIcon
+              className={cn('h-5 w-5 stroke-black', {
+                'stroke-white': Boolean(error),
+              })}
+            />
+            <span className="sr-only">Get my location</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent
-          side="left"
+          side="top"
           className={cn({ 'bg-red-700 text-white': Boolean(error) })}
         >
           <p className="font-bold">{error || 'Get My Location'}</p>

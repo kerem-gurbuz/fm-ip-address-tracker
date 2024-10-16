@@ -1,15 +1,36 @@
-import { getGeolocationData } from '@/lib/data/geolocation';
+'use client';
+
+import type { GeolocationDataType } from '@/lib/definitions/geolocation';
+import {
+  useGeolocationDataBySearchTerm,
+  useInitialGeolocationData,
+} from '@/lib/hooks';
+import {
+  selectIsFullscreenMap,
+  selectShowResultPanel,
+} from '@/lib/redux-store/features/ui';
+import { useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
-import { InfoDisplay } from './info-display';
 import { PatternBackground } from './pattern-background';
+import { ResultPanel } from './result-panel';
 import { SearchBar } from './search-bar';
 
 type HeaderProps = {
   className?: React.ComponentProps<'header'>['className'];
+  initialGeolocationData: GeolocationDataType;
 };
 
-export async function Header({ className }: HeaderProps) {
-  const { data: initialData } = await getGeolocationData();
+export function Header({ className, initialGeolocationData }: HeaderProps) {
+  // Custom hooks for managing geolocation data
+  useInitialGeolocationData(initialGeolocationData);
+  useGeolocationDataBySearchTerm();
+
+  const isFullscreenMap = useAppSelector(selectIsFullscreenMap);
+  const showResultPanel = useAppSelector(selectShowResultPanel);
+
+  if (isFullscreenMap) {
+    return null;
+  }
 
   return (
     <header
@@ -24,7 +45,7 @@ export async function Header({ className }: HeaderProps) {
           </h1>
           <SearchBar />
         </div>
-        <InfoDisplay initialData={initialData} />
+        {showResultPanel ? <ResultPanel /> : null}
       </div>
     </header>
   );

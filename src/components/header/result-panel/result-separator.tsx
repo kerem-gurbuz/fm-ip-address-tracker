@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 
-type InfoSeparatorProps = {
+type ResultSeparatorProps = {
   index: number;
 };
 
-export function InfoSeparator({ index }: InfoSeparatorProps) {
+export function ResultSeparator({ index }: ResultSeparatorProps) {
   return (
     <div
       className={cn(

@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
 
-type InfoItemProps = {
+type ResultItemProps = {
   index: number;
   label: string;
   value: string;
 };
 
-export function InfoItem({ index, label, value }: InfoItemProps) {
+export function ResultItem({ index, label, value }: ResultItemProps) {
   return (
     <div
       className={cn(
@@ -17,9 +17,9 @@ export function InfoItem({ index, label, value }: InfoItemProps) {
         },
       )}
     >
-      <h2 className="text-[10px] font-bold uppercase leading-[12px] tracking-[1.46px] opacity-50 md:text-[12px] md:leading-[14px] md:tracking-[1.75px]">
+      <h3 className="text-[10px] font-bold uppercase leading-[12px] tracking-[1.46px] opacity-50 md:text-[12px] md:leading-[14px] md:tracking-[1.75px]">
         {label}
-      </h2>
+      </h3>
       <p className="text-[20px] font-medium leading-[24px] md:text-[26px] md:leading-[30px]">
         {value}
       </p>

@@ -1,14 +1,17 @@
-import type { GeolocationDataType } from '@/lib/definitions/geolocation';
-import { InfoItem } from './info-item';
-import { InfoSeparator } from './info-separator';
+import { selectCurrentGeolocationData } from '@/lib/redux-store/features/geolocation';
+import { useAppSelector } from '@/lib/redux-store/hooks';
+import { ResultItem } from './result-item';
+import { ResultSeparator } from './result-separator';
 
-type InfoCardProps = {
-  data: GeolocationDataType;
-};
+export function ResultCard() {
+  const geolocationData = useAppSelector(selectCurrentGeolocationData);
+  if (!geolocationData) return null;
 
-export function InfoCard({ data }: InfoCardProps) {
-  const { ip, location, isp } = data;
-  const { city, region, timezone, postalCode } = location;
+  const {
+    ip,
+    isp,
+    location: { city, region, timezone, postalCode },
+  } = geolocationData;
 
   const formattedData = [
     {
@@ -34,9 +37,9 @@ export function InfoCard({ data }: InfoCardProps) {
       key={index}
       className="relative inset-0 flex justify-center min-[480px]:justify-start lg:min-h-[161px]"
     >
-      <InfoItem index={index} label={label} value={value} />
+      <ResultItem index={index} label={label} value={value} />
       {index !== formattedData.length - 1 ? (
-        <InfoSeparator index={index} />
+        <ResultSeparator index={index} />
       ) : null}
     </div>
   ));

@@ -34,16 +34,18 @@ export function DisplayPositionBtn({
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
+            aria-label="Reset view"
+            onClick={handleClick}
             className={cn(
-              'h-[30px] w-[30px] rounded-none rounded-b-[2px] p-0',
+              'h-[30px] w-[50px] justify-end rounded-none rounded-l-full bg-white p-0 pr-[10px] hover:bg-[#f4f4f4]',
               className,
             )}
-            onClick={handleClick}
           >
-            <EyeIcon className="h-5 w-5 stroke-white" />
+            <EyeIcon className="h-5 w-5 stroke-black" />
+            <span className="sr-only">Reset view</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="left">
+        <TooltipContent side="top">
           <p className="font-bold">Reset view</p>
         </TooltipContent>
       </Tooltip>

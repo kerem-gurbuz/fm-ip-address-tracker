@@ -1,4 +1,15 @@
 export {
+  addToSearchHistory,
+  clearSearchHistory,
+  deleteSearchHistoryEntry,
+  resetSearchState,
+  searchSlice,
+  setCurrentSearchTerm,
+  setSearchErrorMessage,
+  setSearchHistoryLength,
+} from './search-slice';
+
+export {
   selectAllSearchHistoryIps,
   selectCurrentSearchTerm,
   selectSearchErrorMessage,
@@ -6,13 +17,3 @@ export {
   selectSearchHistoryEntryByIp,
   selectSearchHistoryLength,
 } from './search-selectors';
-
-export {
-  addToSearchHistory,
-  clearSearchHistory,
-  resetSearchState,
-  searchSlice,
-  setCurrentSearchTerm,
-  setSearchErrorMessage,
-  setSearchHistoryLength,
-} from './search-slice';

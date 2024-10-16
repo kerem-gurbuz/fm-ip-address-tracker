@@ -1,4 +1,3 @@
-import { Header } from '@/components/header';
 import { ReactQueryProvider, ReduxStoreProvider } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
 import { preloadInitialGeolocationData } from '@/lib/data/geolocation';
@@ -6,6 +5,17 @@ import { rubik } from '@/lib/styles/fonts';
 import '@/lib/styles/globals.css';
 
 export { metadata } from '@/lib/seo/metadata';
+
+/*
+  NOTE: z-index
+  ------------------------------------------------------------------------
+  Leaflet...: z-index: 1000
+  Header....: z-index: 1100
+  Sidebar...: z-index: 1200
+  Dialog....: z-index: 2000
+  Error.tsx : z-index: 9000
+  Toast.....: z-index: 9900
+ */
 
 export default function RootLayout({
   children,
@@ -20,7 +30,6 @@ export default function RootLayout({
       <body className={`${rubik.variable} font-sans antialiased`}>
         <ReduxStoreProvider>
           <ReactQueryProvider>
-            <Header className="h-[300px] md:h-[280px]" />
             {children}
             <Toaster />
           </ReactQueryProvider>

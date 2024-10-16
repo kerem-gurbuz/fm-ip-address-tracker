@@ -6,7 +6,6 @@ import { geolocationDataSchema } from '@/lib/definitions/geolocation';
 import { domainNameSchema, ipAddressSchema } from '@/lib/definitions/search';
 
 // TODO: Integrate authentication and authorization checks for API calls
-// TODO: Implement rate limiting to prevent abuse of the API
 // TODO: Implement error logging and reporting (e.g. Sentry)
 
 /* By default, Next.js does not limit the execution of server-side logic (rendering a page or handling an API). Deployment platforms can use maxDuration from the Next.js build output to add specific execution limits.
