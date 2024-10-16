@@ -27,8 +27,8 @@ export function SearchHistory() {
   const searchHistory = useAppSelector(selectSearchHistory);
 
   const handleClearSearchHistory = () => {
-    dispatch(clearSearchHistory());
     dispatch(setCurrentGeolocationData({ geolocationData: null }));
+    dispatch(clearSearchHistory());
   };
 
   return (

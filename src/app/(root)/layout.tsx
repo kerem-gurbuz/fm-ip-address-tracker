@@ -2,17 +2,6 @@ import { Header } from '@/components/header';
 import { Sidebar } from '@/components/sidebar';
 import { getGeolocationData } from '@/lib/data/geolocation';
 
-/*
-  Note: z-index
-  ------------------------------------------------------------------------
-  Leaflet...: z-index: 1000
-  Header....: z-index: 1100
-  Sidebar...: z-index: 1200
-  Dialog....: z-index: 2000
-  Error.tsx : z-index: 9000
-  Toast.....: z-index: 9900
- */
-
 export default async function Layout({
   children,
 }: {

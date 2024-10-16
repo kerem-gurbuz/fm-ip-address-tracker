@@ -7,35 +7,35 @@ import {
 } from 'lucide-react';
 
 type MenuOption = {
-  label: string;
   icon: React.ReactNode;
+  label: string;
   href: string;
 };
 
 export const MENU_OPTIONS: MenuOption[] = [
   {
-    label: 'Profile',
     icon: <UserIcon className="h-4 w-4" />,
+    label: 'Profile',
     href: '#',
   },
   {
-    label: 'Messages',
     icon: <MessageSquareIcon className="h-4 w-4" />,
+    label: 'Messages',
     href: '#',
   },
   {
-    label: 'Analytics',
     icon: <BarChartIcon className="h-4 w-4" />,
+    label: 'Analytics',
     href: '#',
   },
   {
-    label: 'Settings',
     icon: <SettingsIcon className="h-4 w-4" />,
+    label: 'Settings',
     href: '#',
   },
   {
-    label: 'Logout',
     icon: <LogOutIcon className="h-4 w-4" />,
+    label: 'Logout',
     href: '#',
   },
 ];

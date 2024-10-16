@@ -27,12 +27,12 @@ export function SearchHistoryCard({ entry }: SearchHistoryCardProps) {
   }`.trim();
 
   const handleSelectEntry = () => {
-    dispatch(setCurrentGeolocationData({ geolocationData: data }));
+    dispatch(setCurrentGeolocationData({ geolocationData: entry.data }));
   };
 
   const handleDeleteEntry = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    dispatch(deleteSearchHistoryEntry({ entryTimestamp: timestamp }));
+    dispatch(deleteSearchHistoryEntry({ entryTimestamp: entry.timestamp }));
 
     if (currentGeolocationData) {
       if (

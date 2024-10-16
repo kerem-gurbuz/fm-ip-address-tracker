@@ -1,4 +1,4 @@
-import type { LatLngExpression } from 'leaflet';
+import type { LatLngTuple } from 'leaflet';
 import { HouseIcon } from 'lucide-react';
 import { useCallback, type Dispatch, type SetStateAction } from 'react';
 import { useMap } from 'react-leaflet';
@@ -12,12 +12,13 @@ import {
 } from '@/components/ui/tooltip';
 import { useUserLocation } from '@/lib/hooks';
 import { selectFallbackLocation } from '@/lib/redux-store/features/geolocation';
-import { useAppSelector } from '@/lib/redux-store/hooks';
+import { setUserLocation } from '@/lib/redux-store/features/geolocation/geolocation-slice';
+import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 
 type GetMyLocationBtnProps = {
   className?: React.ComponentProps<'button'>['className'];
-  setPosition: Dispatch<SetStateAction<LatLngExpression | null>>;
+  setPosition: Dispatch<SetStateAction<LatLngTuple | null>>;
 };
 
 export function GetMyLocationBtn({
@@ -26,18 +27,19 @@ export function GetMyLocationBtn({
 }: GetMyLocationBtnProps) {
   const { loading, location: userLocation, error } = useUserLocation();
   const fallbackLocation = useAppSelector(selectFallbackLocation);
+  const dispatch = useAppDispatch();
   const map = useMap();
 
   const handleClick = useCallback(() => {
     if (userLocation) {
-      setPosition(() => userLocation as LatLngExpression);
-      map.flyTo(userLocation as LatLngExpression);
+      dispatch(setUserLocation({ userLocation }));
+      setPosition(() => userLocation);
     }
     if (error) {
       setPosition(() => fallbackLocation);
       map.flyTo(fallbackLocation);
     }
-  }, [userLocation, error, fallbackLocation, map, setPosition]);
+  }, [userLocation, error, fallbackLocation, map, dispatch, setPosition]);
 
   return (
     <TooltipProvider>

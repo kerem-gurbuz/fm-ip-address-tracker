@@ -1,4 +1,5 @@
 export {
+  setIsHomeLocation,
   setMapZoomLevel,
   toggleFullscreenMap,
   toggleShowResultPanel,
@@ -7,6 +8,7 @@ export {
 
 export {
   selectIsFullscreenMap,
+  selectIsHomeLocation,
   selectMapZoomLevel,
   selectShowResultPanel,
 } from './ui-selectors';

@@ -1,12 +1,19 @@
 'use client';
 
-import type { LatLngExpression } from 'leaflet';
+import type { LatLngTuple } from 'leaflet';
 import { useEffect, useState } from 'react';
 import { TileLayer, ZoomControl } from 'react-leaflet';
 
-import { selectCurrentCoordinates } from '@/lib/redux-store/features/geolocation';
-import { selectMapZoomLevel } from '@/lib/redux-store/features/ui';
-import { useAppSelector } from '@/lib/redux-store/hooks';
+import {
+  selectCurrentCoordinates,
+  selectUserLocation,
+} from '@/lib/redux-store/features/geolocation';
+import {
+  selectIsHomeLocation,
+  selectMapZoomLevel,
+  setIsHomeLocation,
+} from '@/lib/redux-store/features/ui';
+import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
 import { DisplayPositionBtn } from './display-position-btn';
 import { GetMyLocationBtn } from './get-my-location-btn';
 import { LocationMarker } from './location-marker';
@@ -18,16 +25,23 @@ import 'leaflet/dist/leaflet.css';
 /* 
   NOTES
   ------------------------------------------------------------------------
-  - currentCoordinates: Coordinates of the active geolocation data.
   - position: Position of the map.
-  - Zoom levels (https://leafletjs.com/examples/zoom-levels/):
+  - currentCoordinates: Coordinates of the active geolocation data.
+  - userLocation: Coordinates of the user's current (home) location.
+  - isHomeLocation (redux-store/features/ui/ui-slice.ts): 
+    A boolean to control the visibility of the user's current location indicator.
+  - mapZoomLevel (https://leafletjs.com/examples/zoom-levels/):
     Lower zoom levels means that the map shows entire continents, while higher zoom levels means that the map can show details of a city.
  */
 
 export default function LeafletMap() {
-  const mapZoomLevel = useAppSelector(selectMapZoomLevel);
+  const dispatch = useAppDispatch();
   const currentCoordinates = useAppSelector(selectCurrentCoordinates);
-  const [position, setPosition] = useState<LatLngExpression | null>(
+  const userLocation = useAppSelector(selectUserLocation);
+  const isHomeLocation = useAppSelector(selectIsHomeLocation);
+  const mapZoomLevel = useAppSelector(selectMapZoomLevel);
+
+  const [position, setPosition] = useState<LatLngTuple | null>(
     currentCoordinates,
   );
 
@@ -35,10 +49,18 @@ export default function LeafletMap() {
     if (currentCoordinates) {
       setPosition(() => currentCoordinates);
     }
-  }, [currentCoordinates]);
+  }, [currentCoordinates, dispatch]);
+
+  useEffect(() => {
+    if (position && userLocation) {
+      const isHomeLocation =
+        position[0] === userLocation[0] && position[1] === userLocation[1];
+      dispatch(setIsHomeLocation({ isHomeLocation }));
+    }
+  }, [position, userLocation, dispatch]);
 
   if (!position) {
-    return null;
+    return null; // TODO: Add loading state
   }
 
   return (
@@ -54,7 +76,9 @@ export default function LeafletMap() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {currentCoordinates ? <LocationMarker position={position} /> : null}
+      {currentCoordinates || isHomeLocation ? (
+        <LocationMarker position={position} />
+      ) : null}
       <ZoomControl position="bottomright" />
       <div className="absolute bottom-[27px] left-1/2 z-[1000] flex -translate-x-1/2 rounded-full border-2 border-black/20">
         <DisplayPositionBtn center={position} />

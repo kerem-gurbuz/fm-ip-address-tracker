@@ -4,4 +4,5 @@ export const {
   selectMapZoomLevel,
   selectIsFullscreenMap,
   selectShowResultPanel,
+  selectIsHomeLocation
 } = uiSlice.selectors;

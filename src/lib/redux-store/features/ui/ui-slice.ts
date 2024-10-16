@@ -14,6 +14,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
     - showResultPanel: A boolean to control the visibility of the result panel
     - resultPanelPosition (TODO): To manage the position of the result panel
+    - isHomeLocation: A boolean to control the visibility of the home location indicator
 
   # Theme and appearance:
 
@@ -33,12 +34,14 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type UIState = {
   mapZoomLevel: number;
+  isHomeLocation: boolean;
   isFullscreenMap: boolean;
   showResultPanel: boolean;
 };
 
 const initialState: UIState = {
   mapZoomLevel: 13,
+  isHomeLocation: false,
   isFullscreenMap: false,
   showResultPanel: true,
 };
@@ -50,6 +53,12 @@ export const uiSlice = createSlice({
     setMapZoomLevel: (state, action: PayloadAction<{ zoomLevel: number }>) => {
       state.mapZoomLevel = action.payload.zoomLevel;
     },
+    setIsHomeLocation: (
+      state,
+      action: PayloadAction<{ isHomeLocation: boolean }>,
+    ) => {
+      state.isHomeLocation = action.payload.isHomeLocation;
+    },
     toggleFullscreenMap: (state) => {
       state.isFullscreenMap = !state.isFullscreenMap;
     },
@@ -59,10 +68,15 @@ export const uiSlice = createSlice({
   },
   selectors: {
     selectMapZoomLevel: (state) => state.mapZoomLevel,
+    selectIsHomeLocation: (state) => state.isHomeLocation,
     selectIsFullscreenMap: (state) => state.isFullscreenMap,
     selectShowResultPanel: (state) => state.showResultPanel,
   },
 });
 
-export const { setMapZoomLevel, toggleFullscreenMap, toggleShowResultPanel } =
-  uiSlice.actions;
+export const {
+  setMapZoomLevel,
+  toggleFullscreenMap,
+  toggleShowResultPanel,
+  setIsHomeLocation,
+} = uiSlice.actions;
