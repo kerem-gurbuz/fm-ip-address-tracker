@@ -1,0 +1,1 @@
+export { geolocationQueries } from './query-factory';

@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend Mentor - IP address tracker solution
 
-## Getting Started
+This is a solution to the [IP address tracker challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/ip-address-tracker-I8-0yYAH0). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-First, run the development server:
+- Live Site URL: [https://kerem-gurbuz-fm-ip-address-tracker.vercel.app](https://kerem-gurbuz-fm-ip-address-tracker.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Overview](#overview)
+- [Built with](#built-with)
+- [Author](#author)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### The challenge
 
-## Learn More
+Users should be able to:
 
-To learn more about Next.js, take a look at the following resources:
+- View the optimal layout for each page depending on their device's screen size
+- See hover states for all interactive elements on the page
+- See their own IP address on the map on the initial page load
+- Search for any IP addresses or domains and see the key information and location
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Screenshots
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![lg-screenshot-1](public/screenshots/lg-screenshot-1.webp)
 
-## Deploy on Vercel
+![lg-screenshot-2](public/screenshots/lg-screenshot-2.webp)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![lg-screenshot-3](public/screenshots/lg-screenshot-3.webp)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![lg-screenshot-4](public/screenshots/lg-screenshot-4.webp)
+
+<table>
+  <tr>
+    <td align="center">md-screenshot-1</td>
+    <td align="center">md-screenshot-2</td>
+  </tr>
+  <tr>
+    <td><img src="public/screenshots/md-screenshot-1.webp" alt="md-screenshot-1"></td>
+    <td><img src="public/screenshots/md-screenshot-2.webp" alt="md-screenshot-2"></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center">sm-screenshot-1</td>
+    <td align="center">sm-screenshot-2</td>
+    <td align="center">sm-screenshot-3</td>
+    <td align="center">sm-screenshot-4</td>
+  </tr>
+  <tr>
+    <td><img src="public/screenshots/sm-screenshot-1.webp" alt="sm-screenshot-1"></td>
+    <td><img src="public/screenshots/sm-screenshot-2.webp" alt="sm-screenshot-2"></td>
+    <td><img src="public/screenshots/sm-screenshot-3.webp" alt="sm-screenshot-3"></td>
+    <td><img src="public/screenshots/sm-screenshot-4.webp" alt="sm-screenshot-4"></td>
+  </tr>
+</table>
+
+## Built with
+
+- [Next.js | TypeScript](https://nextjs.org/) - React framework
+- [Redux Toolkit](https://redux-toolkit.js.org/) - Global state management
+- [TanStack Query (FKA React Query)](https://tanstack.com/query/) - Data fetching, caching, synchronizing and updating server state
+- [React Hook Form](https://react-hook-form.com/) - Form handling and validation
+- [Zod](https://zod.dev/) - TypeScript-first schema declaration and validation
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - Accessible, customizable UI components
+- Mobile-first workflow
+
+## Author
+
+- LinkedIn - [Kerem Gurbuz](https://www.linkedin.com/in/gurbuz-kerem)
+- Frontend Mentor - [@kerem-gurbuz](https://www.frontendmentor.io/profile/kerem-gurbuz)
