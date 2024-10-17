@@ -1,5 +1,6 @@
 import { ReactQueryProvider, ReduxStoreProvider } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
+import { preloadInitialGeolocationData } from '@/lib/data/geolocation';
 import { rubik } from '@/lib/styles/fonts';
 import '@/lib/styles/globals.css';
 
@@ -21,8 +22,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // TODO: Preload initial data by client request's public IP address
-  // preloadInitialGeolocationData();
+  // Preload initial data by client request's public IP address
+  preloadInitialGeolocationData();
 
   return (
     <html lang="en">

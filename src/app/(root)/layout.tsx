@@ -1,16 +1,13 @@
 import { Header } from '@/components/header';
 import { Sidebar } from '@/components/sidebar';
-import { IPIFY_API_MOCK } from '@/lib/mocks/ipify-api.mock';
+import { getGeolocationData } from '@/lib/data/geolocation';
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // TODO: Preload initial geolocation data
-  // const { data: initialGeolocationData } = await getGeolocationData();
-
-  const initialGeolocationData = IPIFY_API_MOCK; // For testing purposes
+  const { data: initialGeolocationData } = await getGeolocationData();
 
   return (
     <div className="flex min-h-screen flex-col">
