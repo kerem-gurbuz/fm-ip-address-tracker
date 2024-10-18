@@ -22,7 +22,7 @@ export function ResultPanel() {
       className="overflow-hidden rounded-[15px] bg-white shadow-[0_50px_50px_-25px_rgba(0,0,0,0.10)]"
     >
       <AccordionItem value="accordion-item-1">
-        <AccordionTrigger className="w-full bg-gradient-to-r from-indigo-800 via-blue-600 to-blue-500 px-6 py-[15px] md:px-8">
+        <AccordionTrigger className="w-full bg-gradient-to-r from-indigo-900 via-blue-800 to-blue-700 px-6 py-[15px] md:px-8">
           <h2 className="flex items-center gap-2 text-white">
             {isHomeLocation ? (
               <>
