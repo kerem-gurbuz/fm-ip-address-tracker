@@ -1,7 +1,6 @@
 import type { LatLngTuple } from 'leaflet';
 import { HouseIcon } from 'lucide-react';
-import { useCallback, type Dispatch, type SetStateAction } from 'react';
-import { useMap } from 'react-leaflet';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +11,10 @@ import {
 } from '@/components/ui/tooltip';
 import { useUserLocation } from '@/lib/hooks';
 import { selectFallbackLocation } from '@/lib/redux-store/features/geolocation';
-import { setUserLocation } from '@/lib/redux-store/features/geolocation/geolocation-slice';
+import {
+  setCurrentGeolocationData,
+  setUserLocation,
+} from '@/lib/redux-store/features/geolocation/geolocation-slice';
 import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
 import { cn } from '@/lib/utils';
 
@@ -25,21 +27,47 @@ export function GetMyLocationBtn({
   className,
   setPosition,
 }: GetMyLocationBtnProps) {
-  const { loading, location: userLocation, error } = useUserLocation();
-  const fallbackLocation = useAppSelector(selectFallbackLocation);
-  const dispatch = useAppDispatch();
-  const map = useMap();
+  const [getLocation, setGetLocation] = useState(false);
+  const { loading, location, error } = useUserLocation(getLocation);
 
-  const handleClick = useCallback(() => {
-    if (userLocation) {
-      dispatch(setUserLocation({ userLocation }));
-      setPosition(() => userLocation);
+  const dispatch = useAppDispatch();
+  const fallbackLocation = useAppSelector(selectFallbackLocation);
+
+  useEffect(() => {
+    if (getLocation) {
+      dispatch(
+        setCurrentGeolocationData({
+          geolocationData: null,
+        }),
+      );
+      if (location) {
+        dispatch(setUserLocation({ userLocation: location }));
+        setPosition(() => location);
+      }
+      if (error) {
+        dispatch(setUserLocation({ userLocation: fallbackLocation }));
+        setPosition(() => fallbackLocation);
+      }
+    }
+  }, [getLocation, location, error, fallbackLocation, setPosition, dispatch]);
+
+  const handleGetLocation = () => {
+    setGetLocation(true);
+
+    dispatch(
+      setCurrentGeolocationData({
+        geolocationData: null,
+      }),
+    );
+    if (location) {
+      dispatch(setUserLocation({ userLocation: location }));
+      setPosition(() => location);
     }
     if (error) {
+      dispatch(setUserLocation({ userLocation: fallbackLocation }));
       setPosition(() => fallbackLocation);
-      map.flyTo(fallbackLocation);
     }
-  }, [userLocation, error, fallbackLocation, map, dispatch, setPosition]);
+  };
 
   return (
     <TooltipProvider>
@@ -47,7 +75,7 @@ export function GetMyLocationBtn({
         <TooltipTrigger asChild>
           <Button
             aria-label="Get my location"
-            onClick={handleClick}
+            onClick={handleGetLocation}
             disabled={loading}
             className={cn(
               'h-[30px] w-[40px] rounded-none bg-white p-0 hover:bg-[#f4f4f4]',
