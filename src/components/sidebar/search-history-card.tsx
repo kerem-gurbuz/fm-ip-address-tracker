@@ -8,7 +8,9 @@ import {
   setCurrentGeolocationData,
 } from '@/lib/redux-store/features/geolocation';
 import { deleteSearchHistoryEntry } from '@/lib/redux-store/features/search';
+import { setIsHomeLocation } from '@/lib/redux-store/features/ui';
 import { useAppDispatch, useAppSelector } from '@/lib/redux-store/hooks';
+import { cn } from '@/lib/utils';
 
 type SearchHistoryCardProps = {
   entry: SearchHistoryEntryType;
@@ -16,37 +18,45 @@ type SearchHistoryCardProps = {
 
 export function SearchHistoryCard({ entry }: SearchHistoryCardProps) {
   const dispatch = useAppDispatch();
-  const currentGeolocationData = useAppSelector(selectCurrentGeolocationData);
-
-  const { searchTerm: query, timestamp, data } = entry;
-  const { city, region, postalCode, timezone } = data.location;
+  const {
+    searchTerm: query,
+    data: { location },
+    timestamp,
+  } = entry;
+  const { city, region, postalCode, timezone } = location;
 
   const formattedDate = new Date(timestamp).toLocaleString();
   const formattedLocation = `${city}, ${region} ${
     postalCode ? `(${postalCode})` : ''
   }`.trim();
 
+  const currentGeolocationData = useAppSelector(selectCurrentGeolocationData);
+  const isCurrent = currentGeolocationData
+    ? currentGeolocationData.location.lat === entry.data.location.lat &&
+      currentGeolocationData.location.lng === entry.data.location.lng
+    : false;
+
   const handleSelectEntry = () => {
-    dispatch(setCurrentGeolocationData({ geolocationData: entry.data }));
+    if (!isCurrent) {
+      dispatch(setCurrentGeolocationData({ geolocationData: entry.data }));
+      dispatch(setIsHomeLocation({ isHomeLocation: false }));
+    }
   };
 
   const handleDeleteEntry = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    dispatch(deleteSearchHistoryEntry({ entryTimestamp: entry.timestamp }));
-
-    if (currentGeolocationData) {
-      if (
-        currentGeolocationData.location.lat === entry.data.location.lat &&
-        currentGeolocationData.location.lng === entry.data.location.lng
-      ) {
-        dispatch(setCurrentGeolocationData({ geolocationData: null }));
-      }
+    if (isCurrent) {
+      dispatch(setCurrentGeolocationData({ geolocationData: null }));
     }
-  };
+    dispatch(deleteSearchHistoryEntry({ entryTimestamp: entry.timestamp }));
+  }; 
 
   return (
     <Card
-      className="mb-4 cursor-pointer bg-gray-900 text-white hover:bg-gray-800"
+      className={cn('mb-4 cursor-pointer text-white', {
+        'bg-gradient-to-r from-indigo-900 via-blue-800 to-blue-700': isCurrent,
+        'bg-gray-900 hover:bg-gray-800': !isCurrent,
+      })}
       onClick={handleSelectEntry}
     >
       <CardContent className="p-4">
